@@ -19,31 +19,27 @@ export default function LatestUpdate({ data }) {
       <ul className="grid grid-cols-3 gap-x-4 gap-y-6 overflow-hidden md:grid-cols-6">
         {data.data
           ? data.data.map(comic => (
-                <li key={comic.id} className="flex w-full flex-col gap-[0.65rem]">
-                  <CardComics comicData={comic} />
-                </li>
-              ))
+              <li key={comic.id} className="flex w-full flex-col gap-[0.65rem]">
+                <CardComics comicData={comic} />
+              </li>
+            ))
           : "No comic :("}
       </ul>
 
       <section className="mt-4 flex gap-3">
         <Link
-          href={`?page=${parseInt(data.page) - 1}`}
+          href={data.page > 1 ? `?page=${parseInt(data.page) - 1}` : ""}
           className="flex items-center justify-center rounded bg-white px-10 
-                      drop-shadow-darksoft disabled:bg-white/60"
-          disabled={page <= 1 || page > totalPage}
-        >
+                      drop-shadow-darksoft disabled:bg-white/60">
           {page > 1 && page <= totalPage ? <FaLongArrowAltLeft /> : <AiOutlineStop className="text-red-900/60" />}
         </Link>
 
         <span className="flex-grow rounded bg-white px-5 py-3 text-center font-[500] text-black/70">Page {page}</span>
 
         <Link
-          href={`?page=${parseInt(page) + 1}`}
+          href={data.page < data.totalPage ? `?page=${parseInt(page) + 1}` : ""}
           className="flex items-center justify-center rounded bg-white px-10 
-                      drop-shadow-darksoft disabled:bg-white/60"
-          disabled={page >= totalPage || page < 1}
-        >
+                      drop-shadow-darksoft disabled:bg-white/60">
           {page < totalPage && page >= 1 ? <FaLongArrowAltRight /> : <AiOutlineStop className="text-red-900/60" />}
         </Link>
       </section>

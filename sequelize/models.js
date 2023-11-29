@@ -58,7 +58,7 @@ const Comics = sequelize.define(
     },
   },
   {
-    tableName: "comics",
+    tableName: "Comics",
     timestamps: false,
   }
 );
@@ -110,7 +110,7 @@ const Scraps = sequelize.define(
     },
   },
   {
-    tableName: "scraps",
+    tableName: "Scraps",
     timestamps : false
   }
 );

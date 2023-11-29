@@ -32,13 +32,6 @@ const getAccent = {
 };
 
 export function CardGroups({ data: extras, source = "asurascans" }) {
-  // const { isLoading, data } = useQuery({
-  //   queryKey: ["getGroupLists", source],
-  //   queryFn: ({ queryKey }) => {
-  //     return getGroupLists(queryKey[1]);
-  //   }
-  // });
-// console.log(extras);
   const data = extras.filter(d => d.source === source);
 
   return (
@@ -51,22 +44,14 @@ export function CardGroups({ data: extras, source = "asurascans" }) {
           </a>
         </header>
 
-        {/* {isLoading && <GroupComicsSkeleton />} */}
         <ul
           className={twMerge("customScroll flex flex-shrink-0 flex-row gap-x-4 gap-y-6 overflow-x-scroll pb-6", getAccent[source].scroll)}
         >
-          {/* {!isLoading && data.length < 1 && (
-            <li className="w-full text-center">
-              <span>No new comic :(</span>
+          {data.map(comic => (
+            <li key={comic.id} className="flex w-[30vw] flex-shrink-0 flex-col gap-2 md:w-[14vw] lg:w-[140px]">
+              <CardComics comicData={comic} />
             </li>
-          )} */}
-          {
-          // !isLoading &&
-            data.map(comic => (
-              <li key={comic.id} className="flex w-[30vw] flex-shrink-0 flex-col gap-2 md:w-[14vw] lg:w-[140px]">
-                <CardComics comicData={comic} />
-              </li>
-            ))}
+          ))}
         </ul>
       </section>
     </>

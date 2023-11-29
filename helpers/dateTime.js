@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 
 export function formatDateAgo(dateString) {
-  const dateTime = DateTime.fromISO(dateString.toISOString());
+  const dateTime = DateTime.fromISO(dateString);
   const currentTime = DateTime.local();
 
   const diff = currentTime.diff(dateTime, ["years", "months", "days", "hours", "minutes", "seconds"]);

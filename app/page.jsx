@@ -44,6 +44,7 @@ export default async function Home({ searchParams }) {
   const comics = await getLatests(page);
   const scraps = await getExtras();
 
+  console.log({comics, scraps});
   // console.log(scraps);
   return (
     <main>
