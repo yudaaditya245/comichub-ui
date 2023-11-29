@@ -8,20 +8,47 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html {
+  font-size: 15px;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: 'Outfit Variable';
+  @apply text-black/80
+}
+
+.container {
+  @apply max-w-5xl mx-auto
+}
+
+.customScroll::-webkit-scrollbar {
+  @apply h-[3px]
+}
+
+.darkScroll::-webkit-scrollbar-track {
+  @apply bg-black/50 rounded-full
+}
+.darkScroll::-webkit-scrollbar-thumb {
+  @apply bg-black/50 rounded-full
+}
+
+.asuraScroll::-webkit-scrollbar-track {
+  @apply bg-asura/10 rounded-full
+}
+.asuraScroll::-webkit-scrollbar-thumb {
+  @apply bg-asura rounded-full
+}
+
+.flameScroll::-webkit-scrollbar-track {
+  @apply bg-red-700/10 rounded-full
+}
+.flameScroll::-webkit-scrollbar-thumb {
+  @apply bg-red-700 rounded-full
+}
+
+.rizzScroll::-webkit-scrollbar-track {
+  @apply bg-green-700/10 rounded-full
+}
+.rizzScroll::-webkit-scrollbar-thumb {
+  @apply bg-green-700 rounded-full
 }

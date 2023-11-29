@@ -9,13 +9,45 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource-variable/outfit": "^5.0.8",
+    "@tanstack/react-query": "^5.8.7",
+    "axios": "^1.6.2",
+    "luxon": "^3.4.4",
+    "mysql2": "^3.6.5",
+    "next": "14.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.7",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.0.3"
+    "react-icons": "^4.12.0",
+    "sequelize": "^6.35.1",
+    "swiper": "^11.0.5",
+    "tailwind-merge": "^2.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
     "postcss": "^8",
     "tailwindcss": "^3.3.0"
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ],
+    "arrowParens": "avoid",
+    "bracketSpacing": true,
+    "htmlWhitespaceSensitivity": "css",
+    "insertPragma": false,
+    "jsxBracketSameLine": false,
+    "jsxSingleQuote": false,
+    "printWidth": 140,
+    "proseWrap": "preserve",
+    "quoteProps": "as-needed",
+    "requirePragma": false,
+    "semi": true,
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false,
+    "vueIndentScriptAndStyle": false,
+    "rangeStart": 0
   }
 }
