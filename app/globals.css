@@ -26,7 +26,7 @@ body {
 }
 
 .darkScroll::-webkit-scrollbar-track {
-  @apply bg-black/50 rounded-full
+  @apply bg-black/10 rounded-full
 }
 .darkScroll::-webkit-scrollbar-thumb {
   @apply bg-black/50 rounded-full

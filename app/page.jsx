@@ -22,11 +22,10 @@ export async function getLatests(page = 1) {
 }
 
 export async function getExtras() {
-  
   try {
     const data = await Scraps.findAll({
-      where : {
-        mainId : null
+      where: {
+        mainId: null
       },
       order: [["updated_at", "DESC"]]
     });
@@ -41,14 +40,16 @@ export default async function Home({ searchParams }) {
   const groupLists = ["asurascans", "flamecomics", "rizzcomic"];
 
   const page = searchParams.page;
-  const comics = await getLatests(page);
-  const scraps = await getExtras();
+  const comics = JSON.parse(JSON.stringify(await getLatests(page)));
+  const scraps = JSON.parse(JSON.stringify(await getExtras()));
 
-  console.log({comics, scraps});
+  // console.log({ comics, scraps });
   // console.log(scraps);
   return (
     <main>
       <LatestUpdate data={comics} />
+
+      <CardGroups data={scraps} />
 
       {groupLists.map((group, index) => (
         <CardGroups key={index} data={scraps} source={group} />

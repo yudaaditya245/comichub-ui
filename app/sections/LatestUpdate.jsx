@@ -27,7 +27,7 @@ export default function LatestUpdate({ data }) {
       </ul>
 
       <section className="mt-4 flex gap-3">
-        <Link
+        <Link scroll={false}
           href={data.page > 1 ? `?page=${parseInt(data.page) - 1}` : ""}
           className="flex items-center justify-center rounded bg-white px-10 
                       drop-shadow-darksoft disabled:bg-white/60">
@@ -36,7 +36,7 @@ export default function LatestUpdate({ data }) {
 
         <span className="flex-grow rounded bg-white px-5 py-3 text-center font-[500] text-black/70">Page {page}</span>
 
-        <Link
+        <Link scroll={false}
           href={data.page < data.totalPage ? `?page=${parseInt(page) + 1}` : ""}
           className="flex items-center justify-center rounded bg-white px-10 
                       drop-shadow-darksoft disabled:bg-white/60">

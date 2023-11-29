@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import { GroupComicsSkeleton } from "@/components/Skeletons";
 import { getGroupLists } from "@/utils/qComics";
@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { FaAngleRight } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 import CardComics from "@/components/CardComics";
+import { useRef } from "react";
+import { useDraggable } from "react-use-draggable-scroll";
 
 const getAccent = {
   asurascans: {
@@ -28,11 +30,21 @@ const getAccent = {
     link: "rizz link",
     text: "text-green-700",
     scroll: "rizzScroll"
+  },
+  all: {
+    title: "All NEW",
+    title_link: "Browse more",
+    link: "all link",
+    text: "text-black/80",
+    scroll: "darkScroll"
   }
 };
 
-export function CardGroups({ data: extras, source = "asurascans" }) {
-  const data = extras.filter(d => d.source === source);
+export function CardGroups({ data: extras, source = "all" }) {
+  const data = source !== "all" ? extras.filter(d => d.source === source) : extras;
+
+  const ref = useRef();
+  const { events } = useDraggable(ref);
 
   return (
     <>
@@ -45,6 +57,8 @@ export function CardGroups({ data: extras, source = "asurascans" }) {
         </header>
 
         <ul
+          {...events}
+          ref={ref}
           className={twMerge("customScroll flex flex-shrink-0 flex-row gap-x-4 gap-y-6 overflow-x-scroll pb-6", getAccent[source].scroll)}
         >
           {data.map(comic => (

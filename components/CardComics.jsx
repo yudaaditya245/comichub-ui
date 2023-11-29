@@ -21,8 +21,8 @@ export default function CardComics({ comicData }) {
                             text-sm leading-[1.16rem] text-white/80 backdrop-blur-sm"
         >
           <section className="flex grow flex-col leading-[1.1rem]">
-            <span className="text-[0.8rem] font-[700] sm:text-[0.9rem]">Chapter {comicData.latest_chapter}</span>
-            <span className="text-[0.78rem] text-white/70 sm:text-[0.85rem]">{formatDateAgo(comicData.updated_at)}</span>
+            <span className="text-[0.82rem] font-[700] sm:text-[0.9rem]">Chapter {comicData.latest_chapter}</span>
+            <span className="text-[0.75rem] text-white/70 sm:text-[0.85rem]">{formatDateAgo(comicData.updated_at)}</span>
             {/* <span className="text-[0.78rem] text-white/70 sm:text-[0.85rem]">{comicData.updated_at.toIso().toString()}</span> */}
           </section>
           <i href="">
