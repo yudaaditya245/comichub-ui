@@ -17,6 +17,6 @@ export function formatDateAgo(dateString) {
   } else if (diff.minutes > 0) {
     return `${diff.minutes} minute${diff.minutes > 1 ? "s" : ""} ago`;
   } else {
-    return `${diff.seconds} second${diff.seconds > 1 ? "s" : ""} ago`;
+    return "a minute ago";
   }
 }

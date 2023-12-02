@@ -1,5 +1,5 @@
 export function LatestComicsSkeleton() {
-  const array = Array.from({ length: 12 });
+  const array = Array.from({ length: 18 });
   return (
     <ul className="grid grid-cols-3 gap-x-4 gap-y-6 pb-2 md:grid-cols-6">
       {array.map((_, index) => (
