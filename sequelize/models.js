@@ -3,6 +3,32 @@ const { DataTypes } = require("sequelize");
 // import { sequelize } from '../sequelize';
 const { sequelize } = require("@/sequelize/sequelize");
 
+// define view models for relations
+
+const ComicScrap = sequelize.define('ComicScrap', {
+  comic_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+  },
+  comic_title: {
+    type: DataTypes.STRING,
+  },
+  scrap_id: {
+    type: DataTypes.INTEGER,
+  },
+  latest_chapter: {
+    type: DataTypes.INTEGER,
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+  },
+}, {
+  timestamps: false,
+  freezeTableName: true,
+  tableName: 'comics_scraps',
+});
+
 // Define the 'Comic' model
 const Comics = sequelize.define(
   "comics",
@@ -28,14 +54,6 @@ const Comics = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    latest_chapter: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    link_chapter: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
     genres: {
       type: DataTypes.STRING(255),
       allowNull: true,
@@ -51,14 +69,10 @@ const Comics = sequelize.define(
     anilist_url: {
       type: DataTypes.STRING(255),
       allowNull: true,
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
+    }
   },
   {
-    tableName: "Comics",
+    tableName: "comics",
     timestamps: false,
   }
 );
@@ -110,7 +124,7 @@ const Scraps = sequelize.define(
     },
   },
   {
-    tableName: "Scraps",
+    tableName: "scraps",
     timestamps : false
   }
 );
@@ -122,5 +136,14 @@ Scraps.belongsTo(Comics, {
 Comics.hasMany(Scraps, {
   foreignKey: "mainId"
 })
+ComicScrap.hasOne(Comics,{
+  foreignKey: "id",
+  sourceKey : 'comic_id'
+})
+ComicScrap.hasOne(Scraps,{
+  foreignKey: "id",
+  sourceKey : 'scrap_id'
+})
 
-module.exports = { Comics, Scraps };
+
+module.exports = { Comics, Scraps, ComicScrap };

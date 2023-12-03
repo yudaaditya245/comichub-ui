@@ -79,7 +79,7 @@ const getAccent = {
     scroll: "greenScroll"
   },
   all: {
-    title: "All NEW COMICS",
+    title: "All NEW FETCHED",
     title_link: "Browse more",
     link: "all link",
     text: "text-black/80",
