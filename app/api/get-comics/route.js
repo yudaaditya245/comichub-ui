@@ -1,33 +1,53 @@
-import { Comics, Scraps } from "@/sequelize/models";
+import prisma from "@/lib/prismaClient";
 
 export async function GET(request) {
   const page = request.nextUrl.searchParams.get("page") || 1;
   const source = request.nextUrl.searchParams.get("source");
+  const limit = parseInt(request.nextUrl.searchParams.get("limit")) || 18;
 
-  const limit = 18;
   const offset = (page - 1) * limit;
 
-  let whereClause = {};
+  let Model,
+    whereClause = {},
+    includeClause = {},
+    order;
+
   if (source) {
-    whereClause = {
-      source: source
+    Model = prisma.scraps;
+    order = {
+      updated_at: "desc"
     };
+    whereClause.source = source;
+  } else {
+    Model = prisma.comics;
+    order = {
+      latest_scrap: {
+        updated_at: "desc"
+      }
+    };
+    includeClause.latest_scrap = true;
   }
 
-  const Model = source ? Scraps : Comics;
-
   try {
-    const { count, rows } = await Model.findAndCountAll({
-      where: whereClause,
-      limit,
-      offset,
-      order: [["updated_at", "DESC"]]
+    const data = await Model.findMany({
+      take: limit,
+      skip: offset,
+      orderBy: order,
+      include: includeClause,
+      where: whereClause
     });
 
-    const totalPage = Math.ceil(count / limit);
+    const isNext = data.length === limit;
 
-    return Response.json({ totalPage, data: rows });
+    return Response.json({
+      page: parseInt(page),
+      source,
+      isNext,
+      data
+    });
   } catch (error) {
     throw error;
+  } finally {
+    await prisma.$disconnect();
   }
 }

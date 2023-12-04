@@ -1,18 +1,22 @@
 "use client";
 
 import { GroupComicsSkeleton } from "@/components/Skeletons";
-import { getGroupLists } from "@/utils/qComics";
 import { useQuery } from "@tanstack/react-query";
 import { FaAngleRight } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
 import CardComics from "@/components/CardComics";
 import { useRef } from "react";
 import { useDraggable } from "react-use-draggable-scroll";
+import axios from "axios";
 
 export function CardGroups({ source = "all" }) {
   const { isLoading, data: groupsData } = useQuery({
     queryKey: ["getGroups"],
-    queryFn: getGroupLists
+    queryFn: async () => {
+      const { data } = await axios.get("/api/get-groups-home");
+      if (data) return data;
+      throw Error("No data");
+    }
   });
 
   const data = source === "all" ? groupsData : groupsData?.filter(d => d.source === source);
@@ -47,6 +51,7 @@ export function CardGroups({ source = "all" }) {
             {data.map(comic => (
               <li key={comic.id} className="flex w-[30vw] flex-shrink-0 flex-col gap-2 md:w-[14vw] lg:w-[140px]">
                 <CardComics comicData={comic} />
+                {/* {console.log("group == ", comic)} */}
               </li>
             ))}
           </ul>

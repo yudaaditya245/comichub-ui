@@ -1,14 +1,18 @@
 export function LatestComicsSkeleton() {
   const array = Array.from({ length: 18 });
   return (
-    <ul className="grid grid-cols-3 gap-x-4 gap-y-6 pb-2 md:grid-cols-6">
-      {array.map((_, index) => (
-        <li key={index} className="flex w-full flex-col gap-[0.65rem]">
-          <div className="aspect-[3/4.5] animate-pulse rounded bg-green-600/30"></div>
-          <div className="h-4 w-[80%] animate-pulse rounded bg-green-600/30"></div>
-        </li>
-      ))}
-    </ul>
+    // <div className="mt-3 flex flex-col gap-8 p-5 max-w-5xl mx-auto">
+    //   <div className="h-7 w-[60%] animate-pulse rounded bg-black/30"></div>
+      <ul className="grid grid-cols-3 gap-x-4 gap-y-6 pb-2 md:grid-cols-6">
+        {array.map((_, index) => (
+          <li key={index} className="flex w-full flex-col gap-[0.65rem]">
+            <div className="aspect-[3/4.5] animate-pulse rounded bg-green-600/30"></div>
+            <div className="h-4 w-[80%] animate-pulse rounded bg-green-600/30"></div>
+          </li>
+        ))}
+      </ul>
+      // <div className="h-10 w-full animate-pulse rounded bg-black/30"></div>
+    // </div>
   );
 }
 

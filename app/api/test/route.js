@@ -1,8 +1,4 @@
-import { formatDateAgo } from "@/helpers/dateTime";
-import { ComicScrap, Comics, Scraps } from "@/sequelize/models";
-import { sequelize } from "@/sequelize/sequelize";
-import { DateTime } from "luxon";
-import { Op, Sequelize } from "sequelize";
+
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -24,6 +20,8 @@ export async function GET() {
     return Response.json(res);
   } catch (e) {
     return Response.json(e.message);
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
