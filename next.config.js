@@ -8,6 +8,7 @@ const nextConfig = {
       { hostname: "**.kitsu.io" },
       { hostname: "flamecomics.com" },
       { hostname: "rizzcomic.com" },
+      { hostname: "drakescans.com" },
     ]
   }
 };

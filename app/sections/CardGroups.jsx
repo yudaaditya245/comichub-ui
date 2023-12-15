@@ -13,7 +13,7 @@ export function CardGroups({ source = "all" }) {
   const { isLoading, data: groupsData } = useQuery({
     queryKey: ["getGroups"],
     queryFn: async () => {
-      const { data } = await axios.get("/api/get-groups-home");
+      const { data } = await axios.get("/api/get-groups-latest");
       if (data) return data;
       throw Error("No data");
     }
