@@ -3,18 +3,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa";
 
-export default function CardLatest({ comic }) {
+export default function CardComics({ comicData: comic }) {
   // console.log(comic);
-  const cardUrl = `/comic/${comic.comic.id}`;
-  const cardTime = comic.scrap.updated_at;
-  const cardChapterUrl = comic.scrap.images ? "/gonnabehere" : comic.scrap.link_chapter;
+  const cardUrl = comic.source ? `/extra/${comic.id}` : `/comics/${comic.id}`;
+  
+  const chapterData = comic.source ? comic : comic.latest_scrap;
+  const cardTime = chapterData.updated_at;
+  const cardChapterUrl = chapterData.chapImg ? "/gonnabehere" : chapterData.link_chapter ;
 
   return (
     <>
       <div className="relative block aspect-[3/4.7] overflow-hidden rounded-md bg-blue-400 shadow-lg">
+        <span
+          className="absolute right-0 top-0 rounded-bl-lg bg-white/70 px-2 text-[0.8rem] font-medium 
+                        text-black/80 backdrop-blur-sm"
+        >
+          {comic.source}
+        </span>
 
         <Link href={cardUrl}>
-          <Image src={comic.comic.cover_img} width={500} height={300} alt={comic.comic.title} className="h-full w-full object-cover object-center" />
+          <Image src={comic.cover_img} width={500} height={300} alt={comic.title} className="h-full w-full object-cover object-center" />
         </Link>
 
         <a
@@ -25,7 +33,7 @@ export default function CardLatest({ comic }) {
                             text-sm leading-[1.16rem] text-white/80 backdrop-blur-sm"
         >
           <section className="flex grow flex-col leading-[1.1rem]">
-            <span className="text-[0.82rem] font-[700] sm:text-[0.9rem]">Chapter {comic.scrap.latest_chapter}</span>
+            <span className="text-[0.82rem] font-[700] sm:text-[0.9rem]">Chapter {comic.latest_chapter}</span>
             <span className="text-[0.75rem] text-white/70 sm:text-[0.85rem]">{formatDateAgo(cardTime)}</span>
           </section>
           <i href="">
@@ -35,7 +43,7 @@ export default function CardLatest({ comic }) {
       </div>
 
       <Link href={cardUrl} className="line-clamp-2 text-ellipsis font-semibold text-black/70 max-md:text-[0.9rem]">
-        {comic.comic.title}
+        {comic.title}
       </Link>
     </>
   );

@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { LatestComicsSkeleton } from "@/components/Skeletons";
 import axios from "axios";
 import Link from "next/link";
-import CardLatest from "@/components/CardLatest";
+import CardComics from "@/components/CardComics";
 
 export default function LatestUpdate() {
   const { isLoading, data } = useQuery({
@@ -29,12 +29,11 @@ export default function LatestUpdate() {
       {isLoading ? (
         <LatestComicsSkeleton />
       ) : (
-        <ul className="grid grid-cols-3 gap-x-4 gap-y-6 overflow-hidden md:grid-cols-6">
+        <ul className="grid grid-cols-3 gap-x-5 gap-y-7 overflow-hidden md:grid-cols-6">
           {data
             ? data.map(comic => (
                 <li key={comic.id} className="flex w-full flex-col gap-[0.65rem]">
-                  <CardLatest comic={comic} />
-                  {/* {console.log("latest == ",comic)} */}
+                  <CardComics comic={comic} />
                 </li>
               ))
             : "No comic :("}

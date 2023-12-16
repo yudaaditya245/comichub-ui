@@ -9,11 +9,11 @@ import { useRef } from "react";
 import { useDraggable } from "react-use-draggable-scroll";
 import axios from "axios";
 
-export function CardGroups({ source = "all" }) {
+export function ListGroups({ source = "all" }) {
   const { isLoading, data: groupsData } = useQuery({
-    queryKey: ["getGroups"],
+    queryKey: ["getGroups", source],
     queryFn: async () => {
-      const { data } = await axios.get("/api/get-groups-latest");
+      const { data } = await axios.get("/api/get-groups-latest?ex=yes");
       if (data) return data;
       throw Error("No data");
     }
@@ -50,8 +50,7 @@ export function CardGroups({ source = "all" }) {
           >
             {data.map(comic => (
               <li key={comic.id} className="flex w-[30vw] flex-shrink-0 flex-col gap-2 md:w-[14vw] lg:w-[140px]">
-                <CardComics comicData={comic} />
-                {/* {console.log("group == ", comic)} */}
+                <CardComics comic={comic} />
               </li>
             ))}
           </ul>
@@ -84,7 +83,7 @@ const getAccent = {
     scroll: "greenScroll"
   },
   all: {
-    title: "All NEW FETCHED",
+    title: "All NEW FETCHES",
     title_link: "Browse more",
     link: "all link",
     text: "text-black/80",

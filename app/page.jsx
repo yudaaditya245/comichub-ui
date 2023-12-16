@@ -1,11 +1,11 @@
-import { CardGroups } from "./sections/CardGroups";
+import { ListGroups } from "./sections/ListGroups";
 import LatestUpdate from "./sections/LatestUpdate";
 
 export default async function Home() {
   return (
     <main>
       <LatestUpdate />
-      {/* <CardGroups /> */}
+      <ListGroups />
     </main>
   );
 }

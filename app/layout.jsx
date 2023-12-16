@@ -2,7 +2,6 @@ import { twMerge } from "tailwind-merge";
 import Nav from "./Nav";
 import Provider from "./Provider";
 import "./globals.css";
-import "@fontsource-variable/outfit";
 
 import { Signika_Negative } from "next/font/google";
 
