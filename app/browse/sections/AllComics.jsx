@@ -18,7 +18,8 @@ export default function AllComics() {
     initialPageParam: 1,
     getNextPageParam: lastPage => {
       return lastPage.isNext ? parseInt(lastPage.page) + 1 : undefined;
-    }
+    },
+    staleTime : 5 * (60 * 1000)
   });
 
   // initialize scroll restoration, restore scroll when data still exist in useEffect
