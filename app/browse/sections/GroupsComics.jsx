@@ -1,5 +1,6 @@
 import CardComics from "@/components/CardComics";
 import { LatestComicsSkeleton } from "@/components/Skeletons";
+import { scrollRestoreByCache } from "@/hooks/useScrollRestoration";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Fragment } from "react";
@@ -16,6 +17,9 @@ export default function GroupsComics({ source }) {
       return lastPage.isNext ? parseInt(lastPage.page) + 1 : undefined;
     }
   });
+
+  // initialize scroll restoration, restore scroll when data still exist in useEffect
+  scrollRestoreByCache(`${source}ScrollY`, data);
 
   return (
     <section className="container flex flex-col gap-6">

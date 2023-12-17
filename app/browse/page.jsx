@@ -7,8 +7,6 @@ import AllComics from "./sections/AllComics";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
-import { useDebouncedCallback } from "use-debounce";
 
 export default function Browse() {
   const params = useSearchParams();
@@ -22,8 +20,6 @@ export default function Browse() {
       throw Error("No data");
     }
   });
-
-  browseScrollHandler(); // initialize scroll restoration
 
   return (
     <main className="mx-auto flex min-h-full max-w-5xl flex-col gap-2 p-5">
@@ -62,24 +58,4 @@ function GroupButton({ state, slug, text }) {
   );
 }
 
-function browseScrollHandler() {
-  const handleScroll = useDebouncedCallback(() => {
-    const position = window.scrollY;
-    localStorage.setItem("browseScrollY", position);
-  }, 50);
 
-  useEffect(() => {
-    const scrollY = localStorage.getItem("browseScrollY");
-    if (scrollY) {
-      window.scrollTo({
-        top: scrollY,
-        behavior: "smooth"
-      });
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-}

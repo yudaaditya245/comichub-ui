@@ -36,7 +36,7 @@ export default function Nav({ className }) {
   return (
     <nav
       className={twMerge(
-        "bg-gra sticky bottom-0 flex w-full p-3 shadow-md",
+        "bg-gra sticky bottom-0 flex w-full p-3 pt-7 shadow-md",
         "to-light-300 bg-gradient-to-b from-transparent",
         className
       )}

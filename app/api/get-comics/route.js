@@ -31,7 +31,10 @@ export async function GET(request) {
       scrap_id: comic.scrap.id,
       id: comic.comic.id,
       cover_img: comic.comic.cover_img,
-      title: comic.comic.title
+      title: comic.comic.title,
+      description : comic.comic.description,
+      synonyms : (JSON.parse(comic.comic.synonyms)).flat(Infinity).filter(value => value !== null),
+      genres : (JSON.parse(comic.comic.genres)).flat(Infinity),
     }));
 
     const isNext = data.length >= limit;
