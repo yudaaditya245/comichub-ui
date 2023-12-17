@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import CardComics from "@/components/CardComics";
 import { LatestComicsSkeleton } from "@/components/Skeletons";
@@ -7,25 +7,24 @@ import axios from "axios";
 import { Fragment } from "react";
 
 export default function AllComics() {
+
   const { isPending, data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ["getLatest"],
+    queryKey: ["getComicsInfinity"],
     queryFn: async ({ pageParam }) => {
       const { data } = await axios.get(`/api/get-comics?page=${pageParam}`);
       if (data) return data;
       throw Error("No data");
     },
-    initialPageParam : 1,
+    initialPageParam: 1,
     getNextPageParam: lastPage => {
       return lastPage.isNext ? parseInt(lastPage.page) + 1 : undefined;
     }
   });
 
-
-  // const data = await getLatest();
+  
   return (
     <section className="container flex flex-col gap-6">
-      All comics
-      {/* {isPending ? (
+      {isPending ? (
         <LatestComicsSkeleton />
       ) : (
         <>
@@ -55,7 +54,7 @@ export default function AllComics() {
         >
           <span className="text-[0.94rem] font-semibold">Browse more ...</span>
         </button>
-      )} */}
+      )}
     </section>
   );
 }

@@ -19,9 +19,14 @@ export async function GET(request) {
   try {
     const data = await prisma.scraps.findMany({
       where: whereClause,
-      orderBy: {
-        updated_at: "desc"
-      },
+      orderBy: [
+        {
+          updated_at: "desc"
+        },
+        {
+          id: "asc"
+        }
+      ],
       take: limit,
       skip: offset
     });

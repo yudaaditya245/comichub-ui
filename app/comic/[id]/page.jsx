@@ -2,6 +2,7 @@
 
 import { LatestComicsSkeleton } from "@/components/Skeletons";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export default function ComicPage({ params }) {
   const { id } = params;

@@ -9,7 +9,7 @@ import CardComics from "@/components/CardComics";
 
 export default function LatestUpdate() {
   const { isLoading, data } = useQuery({
-    queryKey: ["getLatest"],
+    queryKey: ["getComics"],
     queryFn: async () => {
       const { data } = await axios.get(`/api/get-comics`);
       if (data) return data;

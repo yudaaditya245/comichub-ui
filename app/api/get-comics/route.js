@@ -16,9 +16,14 @@ export async function GET(request) {
       },
       take: limit,
       skip: offset,
-      orderBy: {
-        updated_at: "desc"
-      }
+      orderBy: [
+        {
+          updated_at: "desc"
+        },
+        {
+          id: "asc"
+        }
+      ]
     });
 
     const data = _req.map(comic => ({

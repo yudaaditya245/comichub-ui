@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // output : "standalone",
-  async redirects() {
-    return [];
-  },
   images: {
     remotePatterns: [
       { hostname: "**.asuracomics.com" },

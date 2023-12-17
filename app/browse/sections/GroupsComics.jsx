@@ -6,7 +6,7 @@ import { Fragment } from "react";
 
 export default function GroupsComics({ source }) {
   const { isPending, data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ["getLatestGroups", source],
+    queryKey: ["getGroupsInfinity", source],
     queryFn: async ({ pageParam = 1 }) => {
       const { data } = await axios.get(`/api/get-comics-ex?source=${source}&page=${pageParam}`);
       if (data) return data;
