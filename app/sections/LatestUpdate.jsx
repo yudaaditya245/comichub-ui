@@ -11,7 +11,7 @@ export default function LatestUpdate() {
   const { isLoading, data } = useQuery({
     queryKey: ["getLatest"],
     queryFn: async () => {
-      const { data } = await axios.get(`/api/get-latest`);
+      const { data } = await axios.get(`/api/get-comics`);
       if (data) return data;
       throw Error("No data");
     }
@@ -29,11 +29,11 @@ export default function LatestUpdate() {
       {isLoading ? (
         <LatestComicsSkeleton />
       ) : (
-        <ul className="grid grid-cols-3 gap-x-5 gap-y-7 overflow-hidden md:grid-cols-6">
-          {data
-            ? data.map(comic => (
+        <ul className="grid grid-cols-3 gap-x-5 gap-y-6 md:gap-y-7 overflow-hidden md:grid-cols-6">
+          {data.data
+            ? data.data.map(comic => (
                 <li key={comic.id} className="flex w-full flex-col gap-[0.65rem]">
-                  <CardComics comic={comic} />
+                  <CardComics comic={comic}/>
                 </li>
               ))
             : "No comic :("}

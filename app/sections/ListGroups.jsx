@@ -13,13 +13,16 @@ export function ListGroups({ source = "all" }) {
   const { isLoading, data: groupsData } = useQuery({
     queryKey: ["getGroups", source],
     queryFn: async () => {
-      const { data } = await axios.get("/api/get-groups-latest?ex=yes");
+      const { data } = await axios.get("/api/get-comics-ex?ex=isjnchvs");
       if (data) return data;
       throw Error("No data");
     }
   });
 
-  const data = source === "all" ? groupsData : groupsData?.filter(d => d.source === source);
+  let data = []
+  if (groupsData) {
+    data = source === "all" ? groupsData.data : groupsData.data?.filter(d => d.source === source);
+  }
 
   const ref = useRef();
   const { events } = useDraggable(ref, {
@@ -46,11 +49,12 @@ export function ListGroups({ source = "all" }) {
           <ul
             {...events}
             ref={ref}
-            className={twMerge("customScroll flex flex-shrink-0 flex-row gap-x-4 gap-y-6 overflow-x-scroll pb-6", getAccent[source].scroll)}
+            className={twMerge("customScroll flex flex-shrink-0 flex-row gap-x-5 gap-y-6 overflow-x-scroll pb-6", getAccent[source].scroll)}
           >
+            {data.length < 1 && <span>No comics :(</span>}
             {data.map(comic => (
               <li key={comic.id} className="flex w-[30vw] flex-shrink-0 flex-col gap-2 md:w-[14vw] lg:w-[140px]">
-                <CardComics comic={comic} />
+                <CardComics comic={comic} sourceLabel />
               </li>
             ))}
           </ul>
