@@ -57,7 +57,7 @@ export default function ComicPage({ params }) {
 
                 <section className="flex gap-[0.4rem] font-medium">
                   <Rating score={comic.score} />
-                  <i className="text-[0.9rem] font-medium not-italic"> {comic.score ? comic.score : "No rate"}</i>
+                  <i className="text-[0.9rem] font-medium not-italic"> {comic.score ? (comic.score)/10 : "No rate"}</i>
                 </section>
 
                 <ul className="flex flex-wrap gap-1">

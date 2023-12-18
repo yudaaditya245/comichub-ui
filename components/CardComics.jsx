@@ -5,7 +5,7 @@ import { FaAngleRight } from "react-icons/fa";
 
 export default function CardComics({ comic, sourceLabel=false }) {
 
-  const cardUrl = comic.source ? `/comic/${comic.id}` : `/extra/${comic.id}`;
+  const cardUrl = sourceLabel ? `/extra/${comic.id}` : `/comic/${comic.id}`;
 
   return (
     <>

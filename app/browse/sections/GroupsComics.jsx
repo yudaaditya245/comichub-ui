@@ -3,13 +3,17 @@ import { LatestComicsSkeleton } from "@/components/Skeletons";
 import { scrollRestoreByCache } from "@/hooks/useScrollRestoration";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { twMerge } from "tailwind-merge";
+import { MdFolderSpecial } from "react-icons/md";
 
 export default function GroupsComics({ source }) {
+  const [exc, setExc] = useState(true);
+
   const { isPending, data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ["getGroupsInfinity", source],
+    queryKey: ["getGroupsInfinity", exc, source],
     queryFn: async ({ pageParam = 1 }) => {
-      const { data } = await axios.get(`/api/get-comics-ex?source=${source}&page=${pageParam}`);
+      const { data } = await axios.get(`/api/get-comics-ex?source=${source}&page=${pageParam}&ex=${exc}`);
       if (data) return data;
       throw Error("No data");
     },
@@ -24,9 +28,18 @@ export default function GroupsComics({ source }) {
   return (
     <section className="container flex flex-col gap-6">
       {isPending ? (
-        <LatestComicsSkeleton />
+        <LatestComicsSkeleton length={8}/>
       ) : (
         <>
+          <div>
+            <button onClick={() => setExc(prev => !prev)} className={twMerge(`flex items-center gap-2`)}>
+              <MdFolderSpecial size={20} className={twMerge("text-black/50", exc && "text-green-700")} />{" "}
+              <i className="text-medium mt-[0.1rem] text-[0.92rem] not-italic">
+                / {source} / {exc ? "exclusive" : "all"}
+              </i>
+            </button>
+          </div>
+
           <ul className="grid grid-cols-3 gap-x-4 gap-y-6 overflow-hidden md:grid-cols-6">
             {data.pages.map((data, index) => (
               <Fragment key={index}>

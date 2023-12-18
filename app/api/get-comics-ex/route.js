@@ -13,7 +13,7 @@ export async function GET(request) {
   const ex = request.nextUrl.searchParams.get("ex");
 
   let whereClause = {};
-  if (ex) whereClause.main_id = null;
+  if (ex && ex !== "false") whereClause.main_id = null;
   if (source) whereClause.source = source;
 
   try {

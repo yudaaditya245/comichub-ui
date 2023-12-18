@@ -7,6 +7,7 @@ import AllComics from "./sections/AllComics";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { FaCaretUp } from "react-icons/fa";
 
 export default function Browse() {
   const params = useSearchParams();
@@ -57,5 +58,3 @@ function GroupButton({ state, slug, text }) {
     </Link>
   );
 }
-
-
