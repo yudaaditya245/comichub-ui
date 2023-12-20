@@ -13,11 +13,16 @@ export async function POST(request) {
       },
       include: {
         Scraps: {
-          orderBy: {
-            updated_at: "desc"
-          },
-          include : {
-            source_group : true
+          orderBy: [
+            {
+              latest_chapter: "desc"
+            },
+            {
+              updated_at: "desc"
+            }
+          ],
+          include: {
+            source_group: true
           }
         }
       }

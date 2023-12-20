@@ -4,9 +4,8 @@ import { LatestComicsSkeleton } from "@/components/Skeletons";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
-import { useEffect } from "react";
 import Backdrop from "./comp/backdrop";
-import { FaHeart, FaStar } from "react-icons/fa";
+import { FaAngleRight, FaHeart } from "react-icons/fa";
 import Link from "next/link";
 import Rating from "./comp/rating";
 import parse from "html-react-parser";
@@ -48,13 +47,13 @@ export default function ComicPage({ params }) {
             <Backdrop url={comic.cover_img} />
 
             <section className="container flex flex-row gap-6">
-              <div className="relative w-[30vw] shrink-0 shadow md:max-w-[170px]">
+              <div className="relative w-[30vw] shrink-0 overflow-hidden rounded-lg shadow md:max-w-[170px]">
                 <Image
                   src={comic.cover_img}
                   width={500}
                   height={300}
                   alt={comic.title}
-                  className="h-full w-full rounded-lg object-cover object-center"
+                  className="aspect-5/3 h-full w-full object-cover object-center"
                 />
               </div>
               <div className="flex flex-col justify-center gap-3 pr-4 md:px-6">
@@ -90,22 +89,29 @@ export default function ComicPage({ params }) {
               </button>
             </section>
 
-            <p className="rounded bg-white p-4 text-[0.94rem] text-black/70 shadow">{parse(comic.description)}</p>
+            <p className="rounded-[0.33rem] bg-white p-4 text-[0.94rem] text-black/70 shadow">{parse(comic.description)}</p>
 
             <section className="mt-3 flex flex-col gap-4">
-              <h3 className="text-lg font-bold text-black/70">Fetched source</h3>
+              <h3 className="text-lg font-semibold text-black/80">Fetched source</h3>
               <div className="flex flex-col gap-2">
                 {!comic.Scraps
                   ? "Loading..."
                   : comic.Scraps.map(scrap => (
-                      <div key={scrap.id} className="flex items-center justify-between rounded bg-white px-4 py-2 text-[0.9rem] shadow">
+                      <div key={scrap.id} className="flex items-center gap-4 rounded-[0.3rem] bg-white px-4 py-2 text-[0.9rem] shadow">
                         <div className="flex flex-col">
                           <span className="font-semibold">{scrap.source_group.title}</span>
                           <span className="text-[0.8rem] text-black/60">{scrap.source_group.link}</span>
                         </div>
-                        <a target="_blank" href={scrap.link_chapter} className="flex flex-col items-end">
-                          Chapter {scrap.latest_chapter}
+                        <span className="flex grow flex-col items-end">
+                          <i className="not-italic font-medium">Chapter {scrap.latest_chapter}</i>
                           <i className="text-[0.8rem] not-italic text-black/60">{formatDateAgo(scrap.updated_at)}</i>
+                        </span>
+                        <a
+                          target="_blank"
+                          href={scrap.link_chapter}
+                          className="-mr-4 flex items-center rounded-bl rounded-tl bg-green-700 py-1 pl-2 pr-1 font-semibold text-white/80"
+                        >
+                          {scrap.lang} <FaAngleRight className="pt-[0.05rem]" />
                         </a>
                       </div>
                     ))}
