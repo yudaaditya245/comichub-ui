@@ -6,6 +6,7 @@ import { FaAngleRight } from "react-icons/fa";
 export default function CardComics({ comic, sourceLabel=false }) {
 
   const cardUrl = sourceLabel ? `/extra/${comic.id}` : `/comic/${comic.main_id}`;
+  const chapterUrl = comic.scrap_id ? `/read/${comic.scrap_id}` : `/read/${comic.id}`
 
   return (
     <>
@@ -23,9 +24,9 @@ export default function CardComics({ comic, sourceLabel=false }) {
           <Image src={comic.cover_img} width={500} height={300} alt={comic.title} className="h-full w-full object-cover object-center" />
         </Link>
 
-        <a
-          href={comic.link_chapter}
-          target="_blank"
+        <Link
+          href={chapterUrl}
+          
           className="absolute bottom-0 flex w-full items-center 
                             bg-gradient-to-t from-black/80 to-black/50 py-[0.35rem] pl-[0.65rem] pr-2
                             text-sm leading-[1.16rem] text-white/80 backdrop-blur-sm"
@@ -37,7 +38,7 @@ export default function CardComics({ comic, sourceLabel=false }) {
           <i href="">
             <FaAngleRight />
           </i>
-        </a>
+        </Link>
       </div>
 
       <Link href={cardUrl} className="line-clamp-2 text-ellipsis font-semibold text-black/70 max-md:text-[0.9rem] px-[0.1rem]">
