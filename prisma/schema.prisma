@@ -35,7 +35,7 @@ model ComicsLang {
 model Scraps {
   id             Int         @id @default(autoincrement())
   title          String      @db.VarChar(255)
-  mainId         Comics?     @relation(name: "rel_comic", fields: [main_id], references: [id], onUpdate: SetNull)
+  comic         Comics?     @relation(name: "rel_comic", fields: [main_id], references: [id], onUpdate: SetNull)
   main_id        Int?
   latest_chapter Int         @db.Int
   lang           String      @db.VarChar(255)

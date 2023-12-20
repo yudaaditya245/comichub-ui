@@ -15,6 +15,9 @@ export async function POST(request) {
         Scraps: {
           orderBy: {
             updated_at: "desc"
+          },
+          include : {
+            source_group : true
           }
         }
       }

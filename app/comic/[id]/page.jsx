@@ -9,6 +9,9 @@ import Backdrop from "./comp/backdrop";
 import { FaHeart, FaStar } from "react-icons/fa";
 import Link from "next/link";
 import Rating from "./comp/rating";
+import parse from "html-react-parser";
+import { formatDateAgo } from "@/helpers/dateTime";
+import { SiAnilist } from "react-icons/si";
 
 export default function ComicPage({ params }) {
   const { id } = params;
@@ -32,6 +35,8 @@ export default function ComicPage({ params }) {
       return cacheData?.find(data => data.main_id === parseInt(id));
     }
   });
+
+  // console.log(comic.Scraps && comic.Scraps[0].source);
 
   return (
     <main className="flex flex-col">
@@ -57,12 +62,12 @@ export default function ComicPage({ params }) {
 
                 <section className="flex gap-[0.4rem] font-medium">
                   <Rating score={comic.score} />
-                  <i className="text-[0.9rem] font-medium not-italic"> {comic.score ? (comic.score)/10 : "No rate"}</i>
+                  <i className="text-[0.9rem] font-medium not-italic"> {comic.score ? comic.score / 10 : "No rate"}</i>
                 </section>
 
                 <ul className="flex flex-wrap gap-1">
                   {comic.genres.map(genre => (
-                    <li className="rounded-lg rounded-bl-none bg-white/60 px-2 py-[0.1rem] text-[0.8rem] shadow-sm">
+                    <li key={genre} className="rounded-lg rounded-bl-none bg-white/60 px-2 py-[0.1rem] text-[0.8rem] shadow-sm">
                       <Link href={`/genre/${genre}`}>{genre}</Link>
                     </li>
                   ))}
@@ -71,10 +76,41 @@ export default function ComicPage({ params }) {
             </section>
           </header>
 
-          <section className="container p-6 pt-0 lg:pl-0">
-            <button className="flex w-full items-center justify-center gap-2 rounded bg-[#ec294b] px-4 py-2 font-semibold text-white/90 shadow md:w-[170px]">
-              <FaHeart /> Add to favorite
-            </button>
+          <section className="container flex flex-col gap-4 p-6 pt-0 lg:pl-0">
+            <section className="flex gap-3 text-[0.9rem] font-semibold text-white/90">
+              <a
+                target="_blank"
+                href={comic.anilist_url}
+                className="flex w-full items-center justify-center gap-2 rounded bg-[#02a9ff] px-4 py-2 shadow md:w-[170px]"
+              >
+                <SiAnilist /> More info
+              </a>
+              <button className="flex w-full items-center justify-center gap-2 rounded bg-[#ec294b] px-4 py-2 shadow md:w-[170px]">
+                <FaHeart /> Add to favorite
+              </button>
+            </section>
+
+            <p className="rounded bg-white p-4 text-[0.94rem] text-black/70 shadow">{parse(comic.description)}</p>
+
+            <section className="mt-3 flex flex-col gap-4">
+              <h3 className="text-lg font-bold text-black/70">Fetched source</h3>
+              <div className="flex flex-col gap-2">
+                {!comic.Scraps
+                  ? "Loading..."
+                  : comic.Scraps.map(scrap => (
+                      <div key={scrap.id} className="flex items-center justify-between rounded bg-white px-4 py-2 text-[0.9rem] shadow">
+                        <div className="flex flex-col">
+                          <span className="font-semibold">{scrap.source_group.title}</span>
+                          <span className="text-[0.8rem] text-black/60">{scrap.source_group.link}</span>
+                        </div>
+                        <a target="_blank" href={scrap.link_chapter} className="flex flex-col items-end">
+                          Chapter {scrap.latest_chapter}
+                          <i className="text-[0.8rem] not-italic text-black/60">{formatDateAgo(scrap.updated_at)}</i>
+                        </a>
+                      </div>
+                    ))}
+              </div>
+            </section>
           </section>
         </>
       )}

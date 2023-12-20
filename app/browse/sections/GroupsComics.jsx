@@ -6,6 +6,8 @@ import axios from "axios";
 import { Fragment, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { MdFolderSpecial } from "react-icons/md";
+import { Popover } from "@headlessui/react";
+import { FaInfoCircle } from "react-icons/fa";
 
 export default function GroupsComics({ source }) {
   const [exc, setExc] = useState(true);
@@ -28,15 +30,32 @@ export default function GroupsComics({ source }) {
   return (
     <section className="container flex flex-col gap-6">
       {isPending ? (
-        <LatestComicsSkeleton length={8}/>
+        <LatestComicsSkeleton length={8} />
       ) : (
         <>
           <div>
             <button onClick={() => setExc(prev => !prev)} className={twMerge(`flex items-center gap-2`)}>
-              <MdFolderSpecial size={20} className={twMerge("text-black/50", exc && "text-green-700")} />{" "}
+              <MdFolderSpecial size={23} className={twMerge("text-black/50", exc && "text-green-700")} />{" "}
               <i className="text-medium mt-[0.1rem] text-[0.92rem] not-italic">
                 / {source} / {exc ? "exclusive" : "all"}
               </i>
+              {exc && (
+                <Popover className="relative ml-1">
+                  <Popover.Button className="flex items-center outline-none">
+                    <FaInfoCircle />
+                  </Popover.Button>
+
+                  <Popover.Panel className="absolute -left-10 z-20 mt-3 w-[200px] rounded bg-white px-4 py-3 text-left text-sm shadow-lg">
+                    <span className="font-bold">Exclusive comic</span> is a comic with a title not found on AniList database.
+                    <br />
+                    <br />
+                    It might be a new comic, or use a unique and/or uncommon title.
+                    <br />
+                    <br />
+                    If a comic isn't featured on this exclusive page, you can find it in the <span className="font-bold">All</span> section.
+                  </Popover.Panel>
+                </Popover>
+              )}
             </button>
           </div>
 
