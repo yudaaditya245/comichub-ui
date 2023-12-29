@@ -1,23 +1,26 @@
 import { formatDateAgo } from "@/helpers/dateTime";
 import Image from "next/image";
 import Link from "next/link";
-import { FaAngleRight } from "react-icons/fa";
+import { FaAngleRight, FaStarOfLife } from "react-icons/fa";
+import { BsFire } from "react-icons/bs";
+import { twMerge } from "tailwind-merge";
 
-export default function CardComics({ comic, sourceLabel=false }) {
-
+export default function CardComics({ comic, sourceLabel = false, excLabel = false }) {
   const cardUrl = sourceLabel ? `/extra/${comic.id}` : `/comic/${comic.main_id}`;
-  const chapterUrl = comic.scrap_id ? `/read/${comic.scrap_id}` : `/read/${comic.id}`
+  const chapterUrl = comic.scrap_id ? `/read/${comic.scrap_id}` : `/read/${comic.id}`;
 
   return (
     <>
       <div className="relative block aspect-[3/4.7] overflow-hidden rounded-md bg-blue-400 shadow-lg">
         {sourceLabel && (
-          <span
-            className="absolute right-1 top-1 rounded-bl-lg rounded-tr bg-white/75 px-2 text-[0.8rem] font-semibold 
-          text-black/80 backdrop-blur-sm"
-          >
-            {comic.source}
-          </span>
+          <div className="absolute top-0 bg-gradient-to-b from-black/50 to-transparent w-full flex justify-end p-1 pb-3">
+            <span
+              className="rounded-bl-lg rounded-tr bg-white/75 px-2 text-[0.8rem] font-semibold 
+            text-black/80 backdrop-blur-sm"
+            >
+              {comic.source}
+            </span>
+          </div>
         )}
 
         <Link href={cardUrl}>
@@ -26,10 +29,8 @@ export default function CardComics({ comic, sourceLabel=false }) {
 
         <Link
           href={chapterUrl}
-          
-          className="absolute bottom-0 flex w-full items-center 
-                            bg-gradient-to-t from-black/80 to-black/50 py-[0.35rem] pl-[0.65rem] pr-2
-                            text-sm leading-[1.16rem] text-white/80 backdrop-blur-sm"
+          className="absolute bottom-0 flex w-full items-center bg-gradient-to-t from-black/80 to-black/50 py-[0.35rem] 
+                      pl-[0.65rem] pr-2 text-sm leading-[1.16rem] text-white/80 backdrop-blur-sm"
         >
           <section className="flex grow flex-col leading-[1.1rem]">
             <span className="text-[0.82rem] font-[700] sm:text-[0.9rem]">Chapter {comic.latest_chapter}</span>
@@ -41,7 +42,8 @@ export default function CardComics({ comic, sourceLabel=false }) {
         </Link>
       </div>
 
-      <Link href={cardUrl} className="line-clamp-2 text-ellipsis font-semibold text-black/70 max-md:text-[0.9rem] px-[0.1rem]">
+      <Link href={cardUrl} className="line-clamp-2 text-ellipsis px-[0.1rem] font-semibold text-black/70 max-md:text-[0.9rem]">
+        {excLabel && <BsFire size={13} className="-mt-1 mr-[0.35rem] inline-block animate-pulse text-red-600" />}
         {comic.title}
       </Link>
     </>

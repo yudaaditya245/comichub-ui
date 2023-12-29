@@ -11,7 +11,7 @@ export default function AllComics() {
   const { isPending, data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ["getComicsInfinity"],
     queryFn: async ({ pageParam }) => {
-      const { data } = await axios.get(`/api/get-comics?page=${pageParam}`);
+      const { data } = await axios.get(`/api/get-comics?page=${pageParam}&ex=yes`);
       if (data) return data;
       throw Error("No data");
     },
@@ -36,7 +36,7 @@ export default function AllComics() {
               <Fragment key={index}>
                 {data.data.map(comic => (
                   <li key={comic.id} className="flex w-full flex-col gap-[0.65rem]">
-                    <CardComics comic={comic} />
+                    <CardComics comic={comic} sourceLabel={comic.main_id === null} excLabel={comic.main_id === null}/>
                   </li>
                 ))}
               </Fragment>

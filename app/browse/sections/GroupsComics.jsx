@@ -34,11 +34,13 @@ export default function GroupsComics({ source }) {
       ) : (
         <>
           <div>
-            <button onClick={() => setExc(prev => !prev)} className={twMerge(`flex items-center gap-2`)}>
-              <MdFolderSpecial size={23} className={twMerge("text-black/50", exc && "text-green-700")} />{" "}
-              <i className="text-medium mt-[0.1rem] text-[0.92rem] not-italic">
-                / {source} / {exc ? "exclusive" : "all"}
-              </i>
+            <div className={twMerge(`flex items-center gap-2`)}>
+              <button onClick={() => setExc(prev => !prev)} className="flex items-center gap-2">
+                <MdFolderSpecial size={23} className={twMerge("text-black/50", exc && "text-green-700")} />{" "}
+                <i className="text-medium mt-[0.1rem] text-[0.92rem] not-italic">
+                  / {source} / {exc ? "exclusive" : "all"}
+                </i>
+              </button>
               {exc && (
                 <Popover className="relative ml-1">
                   <Popover.Button className="flex items-center outline-none">
@@ -56,7 +58,7 @@ export default function GroupsComics({ source }) {
                   </Popover.Panel>
                 </Popover>
               )}
-            </button>
+            </div>
           </div>
 
           <ul className="grid grid-cols-3 gap-x-4 gap-y-6 overflow-hidden md:grid-cols-6">

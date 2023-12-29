@@ -35,8 +35,6 @@ export default function ComicPage({ params }) {
     }
   });
 
-  // console.log(comic.Scraps && comic.Scraps[0].source);
-
   return (
     <main className="flex flex-col">
       {isLoading ? (
@@ -53,7 +51,6 @@ export default function ComicPage({ params }) {
                   width={500}
                   height={300}
                   alt={comic.title}
-                  className="aspect-5/3 h-full w-full object-cover object-center"
                 />
               </div>
               <div className="flex flex-col justify-center gap-3 pr-4 md:px-6">

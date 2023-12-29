@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       <body className={twMerge(signika_Negative.className, "bg-light-300")}>
         <Provider>
           <div className="flex min-h-screen flex-col">
-            <div className="flex-grow">{children}</div>
+            <div className="flex-grow pb-5">{children}</div>
             <Nav />
           </div>
         </Provider>

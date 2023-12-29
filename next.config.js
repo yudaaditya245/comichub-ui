@@ -2,9 +2,16 @@
 const nextConfig = {
   // output : "standalone",
   images: {
-    remotePatterns: [
-      { hostname: "**" }
-    ]
+    remotePatterns: [{ hostname: "**" }]
+  },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/browse",
+        permanent: false
+      }
+    ];
   }
 };
 
