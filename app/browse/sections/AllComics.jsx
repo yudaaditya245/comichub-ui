@@ -19,7 +19,7 @@ export default function AllComics() {
     getNextPageParam: lastPage => {
       return lastPage.isNext ? parseInt(lastPage.page) + 1 : undefined;
     },
-    staleTime : 5 * (60 * 1000)
+    staleTime: 5 * (60 * 1000)
   });
 
   // initialize scroll restoration, restore scroll when data still exist in useEffect
@@ -27,22 +27,22 @@ export default function AllComics() {
 
   return (
     <section className="container flex flex-col gap-6">
-      {isPending ? (
-        <LatestComicsSkeleton />
-      ) : (
+      <LatestComicsSkeleton show={isPending} />
+
+      {!isPending && (
         <>
           <ul className="grid grid-cols-3 gap-x-4 gap-y-6 overflow-hidden md:grid-cols-6">
             {data.pages.map((data, index) => (
               <Fragment key={index}>
                 {data.data.map(comic => (
                   <li key={comic.id} className="flex w-full flex-col gap-[0.65rem]">
-                    <CardComics comic={comic} sourceLabel={comic.main_id === null} excLabel={comic.main_id === null}/>
+                    <CardComics comic={comic} sourceLabel={comic.main_id === null} excLabel={comic.main_id === null} />
                   </li>
                 ))}
               </Fragment>
             ))}
           </ul>
-          {isFetchingNextPage && <LatestComicsSkeleton />}
+          {<LatestComicsSkeleton show={isFetchingNextPage} />}
         </>
       )}
 

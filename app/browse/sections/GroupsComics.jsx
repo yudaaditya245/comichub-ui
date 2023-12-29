@@ -6,8 +6,7 @@ import axios from "axios";
 import { Fragment, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { MdFolderSpecial } from "react-icons/md";
-import { Popover } from "@headlessui/react";
-import { FaInfoCircle } from "react-icons/fa";
+import PopoverEx from "../comp/PopoverSm";
 
 export default function GroupsComics({ source }) {
   const [exc, setExc] = useState(true);
@@ -41,23 +40,7 @@ export default function GroupsComics({ source }) {
                   / {source} / {exc ? "exclusive" : "all"}
                 </i>
               </button>
-              {exc && (
-                <Popover className="relative ml-1">
-                  <Popover.Button className="flex items-center outline-none">
-                    <FaInfoCircle />
-                  </Popover.Button>
-
-                  <Popover.Panel className="absolute -left-10 z-20 mt-3 w-[200px] rounded bg-white px-4 py-3 text-left text-sm shadow-lg">
-                    <span className="font-bold">Exclusive comic</span> is a comic with a title not found on AniList database.
-                    <br />
-                    <br />
-                    It might be a new comic, or use a unique and/or uncommon title.
-                    <br />
-                    <br />
-                    If a comic isn't featured on this exclusive page, you can find it in the <span className="font-bold">All</span> section.
-                  </Popover.Panel>
-                </Popover>
-              )}
+              {exc && <PopoverEx />}
             </div>
           </div>
 
