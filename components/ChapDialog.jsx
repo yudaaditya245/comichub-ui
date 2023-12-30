@@ -1,18 +1,29 @@
-import { closeChap } from "@/redux/features/chapdiag";
 import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
-import { Fragment, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Fragment } from "react";
+import { useSelector } from "react-redux";
 import { BiWorld } from "react-icons/bi";
 import { FaFileImage } from "react-icons/fa";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function ChapDialog() {
   const chapdiag = useSelector(state => state.chapdiag);
-  const dispatch = useDispatch();
+
+  const params = useSearchParams();
+  const _modal = params.get("m");
+
+  const router = useRouter();
+
+  const closeHandler = useDebouncedCallback(() => {
+    // BUG WITH HEADLESS UI: the onClose func is triggered twice in mobile, 
+    // so cant use router.back() without debounced
+    router.back();
+  }, [50]);
 
   return (
-    <Transition appear show={chapdiag.open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => dispatch(closeChap())}>
+    <Transition appear show={_modal ? true : false} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={closeHandler}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-75"

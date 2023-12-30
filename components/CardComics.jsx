@@ -6,6 +6,7 @@ import { BsFire } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { openChap, setId, setUrl } from "@/redux/features/chapdiag";
 import { useQueryState } from "next-usequerystate";
+import { useRouter } from "next/navigation";
 
 export default function CardComics({ comic, sourceLabel = false, excLabel = false }) {
   const cardUrl = sourceLabel ? `/extra/${comic.id}` : `/comic/${comic.main_id}`;
@@ -13,13 +14,15 @@ export default function CardComics({ comic, sourceLabel = false, excLabel = fals
   const id = comic.scrap_id ? comic.scrap_id : comic.id;
 
   const dispatch = useDispatch();
-  // const [_, setchapdial] = useQueryState("chapdial", { history: "push", shallow: false });
+  const [_, setchapdial] = useQueryState("m", { history: "push", shallow: false });
 
   function chapDiagHandler() {
     dispatch(setUrl(comic.link_chapter));
     dispatch(setId(id));
-    // setchapdial("1");
-    dispatch(openChap());
+
+    // router.push("/?m=1");
+    setchapdial("1");
+    // dispatch(openChap());
   }
 
   return (
@@ -42,7 +45,7 @@ export default function CardComics({ comic, sourceLabel = false, excLabel = fals
 
         <button
           onClick={chapDiagHandler}
-          className="absolute bottom-0 flex w-full items-center bg-gradient-to-t from-black/80 to-black/50 py-[0.35rem] 
+          className="absolute text-left bottom-0 flex w-full items-center bg-gradient-to-t from-black/80 to-black/50 py-[0.35rem] 
                       pl-[0.65rem] pr-2 text-sm leading-[1.16rem] text-white/80 backdrop-blur-sm"
         >
           <section className="flex grow flex-col leading-[1.1rem]">
