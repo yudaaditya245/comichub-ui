@@ -11,7 +11,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
 
 export default function Nav({ className }) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   const handleScroll = () => {

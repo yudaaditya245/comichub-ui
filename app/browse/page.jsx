@@ -7,7 +7,7 @@ import AllComics from "./sections/AllComics";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { FaCaretUp } from "react-icons/fa";
+import ChapDialog from "@/components/ChapDialog";
 
 export default function Browse() {
   const params = useSearchParams();
@@ -24,7 +24,6 @@ export default function Browse() {
 
   return (
     <main className="mx-auto flex min-h-full max-w-5xl flex-col gap-2 p-5">
-      {/* {console.log(groupSrc)} */}
       <section className="noScroll bottom-16 flex flex-shrink-0 gap-3 overflow-scroll pb-5">
         {isLoading ? (
           <>
@@ -40,6 +39,8 @@ export default function Browse() {
         )}
       </section>
       <div>{groupSrc === "all" ? <AllComics /> : <GroupsComics source={groupSrc} />}</div>
+
+      <ChapDialog />
     </main>
   );
 }

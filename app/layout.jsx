@@ -5,9 +5,7 @@ import "./globals.css";
 
 import { Signika_Negative } from "next/font/google";
 
-const signika_Negative = Signika_Negative({subsets: ["latin"],
-  weight: ["400", "500", "600", "700"]
-});
+const signika_Negative = Signika_Negative({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export const metadata = {
   title: "Comichub",

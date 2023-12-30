@@ -8,6 +8,7 @@ import axios from "axios";
 import { Fragment } from "react";
 
 export default function AllComics() {
+
   const { isPending, data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ["getComicsInfinity"],
     queryFn: async ({ pageParam }) => {
@@ -22,7 +23,7 @@ export default function AllComics() {
     staleTime: 5 * (60 * 1000)
   });
 
-  // initialize scroll restoration, restore scroll when data still exist in useEffect
+  // initialize scroll restoration
   scrollRestoreByCache("browseScrollY", data);
 
   return (
