@@ -1,13 +1,12 @@
 "use client";
 
-import { LatestComicsSkeleton } from "@/components/Skeletons";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
-import Backdrop from "./comp/backdrop";
+import Backdrop from "@/components/comic-page/backdrop";
 import { FaAngleRight, FaHeart } from "react-icons/fa";
 import Link from "next/link";
-import Rating from "./comp/rating";
+import Rating from "@/components/comic-page/rating";
 import parse from "html-react-parser";
 import { formatDateAgo } from "@/helpers/dateTime";
 import { SiAnilist } from "react-icons/si";
@@ -46,12 +45,7 @@ export default function ComicPage({ params }) {
 
             <section className="container flex flex-row gap-6">
               <div className="relative w-[30vw] shrink-0 overflow-hidden rounded-lg shadow md:max-w-[170px]">
-                <Image
-                  src={comic.cover_img}
-                  width={500}
-                  height={300}
-                  alt={comic.title}
-                />
+                <Image src={comic.cover_img} width={500} height={300} alt={comic.title} />
               </div>
               <div className="flex flex-col justify-center gap-3 pr-4 md:px-6">
                 <h1 className="text-lg font-semibold ">{comic.title}</h1>
@@ -100,7 +94,7 @@ export default function ComicPage({ params }) {
                           <span className="text-[0.8rem] text-black/60">{scrap.source_group.link}</span>
                         </div>
                         <span className="flex grow flex-col items-end">
-                          <i className="not-italic font-medium">Chapter {scrap.latest_chapter}</i>
+                          <i className="font-medium not-italic">Chapter {scrap.latest_chapter}</i>
                           <i className="text-[0.8rem] not-italic text-black/60">{formatDateAgo(scrap.updated_at)}</i>
                         </span>
                         <a

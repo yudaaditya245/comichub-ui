@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 
 export function formatDateAgo(dateString) {
-  const now = new Date()  
+  const now = new Date();
   const diffInSeconds = Math.abs(now - new Date(dateString)) / 1000;
   const units = [
     { name: "year", seconds: 31536000 },
@@ -21,24 +21,37 @@ export function formatDateAgo(dateString) {
   }
 
   return "just now";
+}
 
-  // const dateTime = DateTime.utc(dateString);
-  // const currentTime = new Date();
-  // return JSON.stringify(dateTime) +" - "+ JSON.stringify(currentTime)
+export function convertStringToTimestamp(timeAgoString = "") {
+  const currentTime = new Date();
+  let timestamp;
 
-  // const diff = currentTime.diff(dateTime, ["years", "months", "days", "hours", "minutes", "seconds"]);
+  if (timeAgoString.includes("second")) {
+    const seconds = parseInt(timeAgoString);
+    timestamp = currentTime - seconds * 1000;
+  } else if (timeAgoString.includes("min")) {
+    const minutes = parseInt(timeAgoString);
+    timestamp = currentTime - minutes * 60 * 1000;
+  } else if (timeAgoString.includes("hour")) {
+    const hours = parseInt(timeAgoString);
+    timestamp = currentTime - hours * 60 * 60 * 1000;
+  } else if (timeAgoString.includes("day")) {
+    const days = parseInt(timeAgoString);
+    timestamp = currentTime - days * 24 * 60 * 60 * 1000;
+  } else if (timeAgoString.includes("week")) {
+    const weeks = parseInt(timeAgoString);
+    timestamp = currentTime - weeks * 7 * 24 * 60 * 60 * 1000;
+  } else if (timeAgoString.includes("month")) {
+    const months = parseInt(timeAgoString);
+    // Assuming 30 days in a month for simplicity
+    timestamp = currentTime - months * 30 * 24 * 60 * 60 * 1000;
+  } else if (timeAgoString.includes("year")) {
+    const years = parseInt(timeAgoString);
+    timestamp = currentTime - years * 12 * 30 * 24 * 60 * 60 * 1000;
+  } else {
+    timestamp = currentTime;
+  }
 
-  // if (diff.years > 0) {
-  //   return `${diff.years} year${diff.years > 1 ? "s" : ""} ago`;
-  // } else if (diff.months > 0) {
-  //   return `${diff.months} month${diff.months > 1 ? "s" : ""} ago`;
-  // } else if (diff.days > 0) {
-  //   return `${diff.days} day${diff.days > 1 ? "s" : ""} ago`;
-  // } else if (diff.hours > 0) {
-  //   return `${diff.hours} hour${diff.hours > 1 ? "s" : ""} ago`;
-  // } else if (diff.minutes > 0) {
-  //   return `${diff.minutes} minute${diff.minutes > 1 ? "s" : ""} ago`;
-  // } else {
-  //   return "a minute ago";
-  // }
+  return new Date(timestamp);
 }

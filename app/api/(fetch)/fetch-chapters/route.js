@@ -13,25 +13,24 @@ export async function POST(request) {
     const { data } = await axios.get(url, { timeout: 20000 });
     const chapters = getChapters(data, source);
 
-    // await prisma.scrapChapters.deleteMany({
-    //   where: {
-    //     scrap_id: id
-    //   }
-    // });
-    // console.log("after delete");
+    await prisma.scrapChapters.deleteMany({
+      where: {
+        scrap_id: id
+      }
+    });
 
-    // const _data = chapters.map(d => {
-    //   return {
-    //     scrap_id: id,
-    //     ...d
-    //   };
-    // });
+    const _data = chapters.map(d => {
+      return {
+        scrap_id: id,
+        ...d
+      };
+    });
 
-    // await prisma.scrapChapters.createMany({
-    //   data: _data
-    // });
+    await prisma.scrapChapters.createMany({
+      data: _data
+    });
 
-    return Response.json(chapters);
+    return Response.json("ok");
   } catch (error) {
     console.log(error.message);
   } finally {

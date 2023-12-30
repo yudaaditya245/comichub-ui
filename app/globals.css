@@ -30,6 +30,9 @@ body {
   .customScroll::-webkit-scrollbar {
     @apply h-[3px]
   }
+  .customYScroll::-webkit-scrollbar {
+    @apply w-[3px]
+  }
 
   .darkScroll::-webkit-scrollbar-track {
     @apply bg-black/10 rounded-full
