@@ -11,7 +11,6 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 import { FiExternalLink } from "react-icons/fi";
 import { TbReload } from "react-icons/tb";
 import { FaHeart, FaList, FaThList } from "react-icons/fa";
-import { getChapters } from "@/lib/fetch-web/fetchChapters";
 import { formatDateAgo } from "@/helpers/dateTime";
 import { useState } from "react";
 import _ from "lodash";
@@ -37,6 +36,10 @@ export default function ComicExPage({ params }) {
   });
 
   async function chapRefetchHandler(url, source, id) {
+    if (!_.includes(["asurascans", "flamecomics", "rizzcomic", "drakescans", "shinigami"], source)) {
+      return false;
+    }
+
     setLoadChap(true);
 
     console.log(url, source);
@@ -45,6 +48,7 @@ export default function ComicExPage({ params }) {
       source,
       id
     });
+    console.log(data);
     refetch();
 
     setLoadChap(false);
@@ -142,11 +146,11 @@ export default function ComicExPage({ params }) {
               </section>
 
               <section className="flex gap-2 text-white/90">
-                <div className="flex w-full flex-col rounded shadow bg-green-600 px-3 py-2">
+                <div className="flex w-full flex-col rounded bg-green-600 px-3 py-2 shadow">
                   <label className="font-semibold">Oldest</label>
                   <span className="text-[0.9rem] text-white/80">Chapter {_.minBy(comic.chapters, "chapter")?.chapter || "-"}</span>
                 </div>
-                <div className="flex w-full flex-col rounded shadow bg-green-600 px-3 py-2">
+                <div className="flex w-full flex-col rounded bg-green-600 px-3 py-2 shadow">
                   <label className="font-semibold">Newest</label>
                   <span className="text-[0.9rem] text-white/80">Chapter {_.maxBy(comic.chapters, "chapter")?.chapter || "-"}</span>
                 </div>

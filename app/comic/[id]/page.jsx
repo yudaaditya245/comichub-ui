@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import Backdrop from "@/components/comic-page/backdrop";
-import { FaAngleRight, FaHeart } from "react-icons/fa";
+import { FaAngleRight, FaBookOpen, FaHeart } from "react-icons/fa";
 import Link from "next/link";
 import Rating from "@/components/comic-page/rating";
 import parse from "html-react-parser";
@@ -89,20 +89,23 @@ export default function ComicPage({ params }) {
                   ? "Loading..."
                   : comic.Scraps.map(scrap => (
                       <div key={scrap.id} className="flex items-center gap-4 rounded-[0.3rem] bg-white px-4 py-2 text-[0.9rem] shadow">
-                        <div className="flex flex-col">
-                          <span className="font-semibold">{scrap.source_group.title}</span>
-                          <span className="text-[0.8rem] text-black/60">{scrap.source_group.link}</span>
-                        </div>
-                        <span className="flex grow flex-col items-end">
-                          <i className="font-medium not-italic">Chapter {scrap.latest_chapter}</i>
-                          <i className="text-[0.8rem] not-italic text-black/60">{formatDateAgo(scrap.updated_at)}</i>
-                        </span>
+                        <Link href={`/comic/view/${scrap.id}`} className="flex grow">
+                          <div className="flex flex-col ">
+                            <span className="font-semibold">{scrap.source_group.title}</span>
+                            <span className="text-[0.8rem] text-black/60">{scrap.source_group.link}</span>
+                          </div>
+                          <span className="flex grow flex-col items-end ">
+                            <i className="font-medium not-italic">Chapter {scrap.latest_chapter}</i>
+                            <i className="text-[0.8rem] not-italic text-black/60">{formatDateAgo(scrap.updated_at)}</i>
+                          </span>
+                        </Link>
                         <a
                           target="_blank"
                           href={scrap.link_chapter}
-                          className="-mr-4 flex items-center rounded-bl rounded-tl bg-green-700 py-1 pl-2 pr-1 font-semibold text-white/80"
+                          className="-mr-4 flex items-center gap-[0.3rem] rounded-bl rounded-tl bg-green-700 py-1 px-2 font-medium text-white/80"
                         >
-                          {scrap.lang} <FaAngleRight className="pt-[0.05rem]" />
+                          <FaBookOpen />
+                          {scrap.lang}
                         </a>
                       </div>
                     ))}

@@ -11,7 +11,7 @@ import { IoClose } from "react-icons/io5";
 import { BiWorld } from "react-icons/bi";
 
 export default function CardComics({ comic, sourceLabel = false, excLabel = false }) {
-  const cardUrl = sourceLabel ? `/exclusive/${comic.id}` : `/comic/${comic.main_id}`;
+  const cardUrl = sourceLabel ? `/comic/view/${comic.id}` : `/comic/${comic.main_id}`;
   const id = comic.scrap_id ? comic.scrap_id : comic.id;
 
   const chapdial = useSelector(state => state.chapdiag);

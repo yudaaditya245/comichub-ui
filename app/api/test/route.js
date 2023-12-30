@@ -1,40 +1,70 @@
 // import prisma from "@/lib/prismaClient";
+// import { convertStringToTimestamp } from "@/helpers/dateTime";
+// import { getChapters } from "@/lib/fetch-web/fetchChapters";
 import { convertStringToTimestamp } from "@/helpers/dateTime";
-import { getChapters } from "@/lib/fetch-web/fetchChapters";
 import { PrismaClient } from "@prisma/client";
-import axios from "axios";
+// import axios from "axios";
+// import * as cheerio from "cheerio";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export async function POST(request) {
-  const { url, source, id } = await request.json();
+  // const { url } = await request.json();
+  let browser;
 
   try {
-    const { data } = await axios.get(url, { timeout: 20000 });
-    const chapters = getChapters(data, source);
+    puppeteer.use(StealthPlugin());
+    browser = await puppeteer.launch({
+      headless: "new",
+      defaultViewport: null
+    });
 
-    // await prisma.scrapChapters.deleteMany({
-    //   where: {
-    //     scrap_id: id
-    //   }
-    // });
-    // console.log("after delete");
+    const page = await browser.newPage();
 
-    // const _data = chapters.map(d => {
-    //   return {
-    //     scrap_id: id,
-    //     ...d
-    //   };
-    // });
+    await page.goto("https://shinigami.moe/series/player-who-returned-10000-years-later/");
+    await page.waitForSelector(".wp-manga-chapter", { timeout: 30_000 });
 
-    // await prisma.scrapChapters.createMany({
-    //   data: _data
-    // });
+    const chapters = await page.evaluate(() => {
+      const clists = document.querySelectorAll(".wp-manga-chapter");
 
-    return Response.json(chapters);
+      return Array.from(clists).map(comic => {
+        const _chapter = comic.querySelector("a > p").innerText;
+        const chapter = _chapter.split(" ")[1];
+
+        const updated_at = comic.querySelector("a > span > i")?.innerText;
+
+        const link = comic.querySelector("a").getAttribute("href");
+
+        return {
+          chapter: parseFloat(chapter),
+          updated_at,
+          link
+        };
+      });
+    });
+
+    await browser.close();
+
+    const data = chapters.map(c => {
+      const _timestring = ["second", "min", "hour", "day", "week"];
+      let updated_at;
+      if (_timestring.some(s => c.updated_at.includes(s))) {
+        updated_at = convertStringToTimestamp(c.updated_at);
+      } else {
+        updated_at = new Date(c.updated_at);
+      }
+
+      return { ...c, updated_at };
+    });
+
+    return Response.json(data);
   } catch (error) {
-    console.log(error.message);
+    return Response.json(error.message);
   } finally {
-    await prisma.$disconnect();
+    if (browser) {
+      await browser.close();
+    }
   }
 }

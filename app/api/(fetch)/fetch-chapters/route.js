@@ -10,8 +10,7 @@ export async function POST(request) {
   const { url, source, id } = await request.json();
 
   try {
-    const { data } = await axios.get(url, { timeout: 20000 });
-    const chapters = getChapters(data, source);
+    const chapters = await getChapters(url, source);
 
     await prisma.scrapChapters.deleteMany({
       where: {
@@ -30,9 +29,9 @@ export async function POST(request) {
       data: _data
     });
 
-    return Response.json("ok");
+    return Response.json(chapters);
   } catch (error) {
-    console.log(error.message);
+    return Response.json(error.message);
   } finally {
     await prisma.$disconnect();
   }
