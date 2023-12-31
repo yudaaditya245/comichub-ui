@@ -30,6 +30,7 @@ body {
   .customScroll::-webkit-scrollbar {
     @apply h-[3px]
   }
+
   .customYScroll::-webkit-scrollbar {
     @apply w-[3px]
   }
@@ -65,5 +66,5 @@ body {
   .greenScroll::-webkit-scrollbar-thumb {
     @apply bg-green-700 rounded-full
   }
-  
+
 }

@@ -4,6 +4,7 @@ import Provider from "./Provider";
 import "./globals.css";
 
 import { Signika_Negative } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 const signika_Negative = Signika_Negative({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
           <div className="flex min-h-screen flex-col">
             <div className="flex-grow pb-10">{children}</div>
             <Nav />
+            <Toaster />
           </div>
         </Provider>
       </body>

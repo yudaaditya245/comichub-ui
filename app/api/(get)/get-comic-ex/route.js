@@ -14,7 +14,7 @@ export async function POST(request) {
       include: {
         chapters: {
           orderBy : {
-            updated_at : 'desc'
+            chapter : 'desc'
           }
         },
         source_group: true

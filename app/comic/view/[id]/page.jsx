@@ -14,6 +14,7 @@ import { FaHeart, FaList, FaThList } from "react-icons/fa";
 import { formatDateAgo } from "@/helpers/dateTime";
 import { useState } from "react";
 import _ from "lodash";
+import toast from "react-hot-toast";
 
 export default function ComicExPage({ params }) {
   const { id } = params;
@@ -41,6 +42,7 @@ export default function ComicExPage({ params }) {
     }
 
     setLoadChap(true);
+    const toastLoad = toast.loading("Loading...");
 
     console.log(url, source);
     const { data } = await axios.post("/api/fetch-chapters", {
@@ -52,9 +54,16 @@ export default function ComicExPage({ params }) {
     refetch();
 
     setLoadChap(false);
+    toast.success("Done!", {
+      id: toastLoad
+    });
   }
 
   const isChapterUpdate = comic && _.maxBy(_.values(comic.chapters), "chapter")?.chapter === comic?.latest_chapter;
+
+  function toastHandler() {
+    toast.loading("Here is your toast.");
+  }
 
   return (
     <main className="flex flex-col">
@@ -129,6 +138,19 @@ export default function ComicExPage({ params }) {
                 )}
               </h3>
 
+              <section className="flex gap-2 text-white/90">
+                <div className="flex w-full flex-col rounded bg-green-600 px-3 py-2 shadow">
+                  <label className="font-semibold">Oldest</label>
+                  <span className="text-[0.9rem] text-white/80">Chapter {_.minBy(comic.chapters, "chapter")?.chapter || "-"}</span>
+                </div>
+                <div className="flex w-full flex-col rounded bg-green-600 px-3 py-2 shadow">
+                  <label className="font-semibold">Newest</label>
+                  <span className="text-[0.9rem] text-white/80">Chapter {_.maxBy(comic.chapters, "chapter")?.chapter || "-"}</span>
+                </div>
+              </section>
+
+              {/* <button onClick={toastHandler}>click</button> */}
+
               <section className="customYScroll greenScroll grid max-h-[30vh] grid-cols-2 gap-2 overflow-y-scroll rounded pr-2">
                 {comic.chapters.length < 1
                   ? "No chapter fetched"
@@ -143,17 +165,6 @@ export default function ComicExPage({ params }) {
                         </a>
                       </div>
                     ))}
-              </section>
-
-              <section className="flex gap-2 text-white/90">
-                <div className="flex w-full flex-col rounded bg-green-600 px-3 py-2 shadow">
-                  <label className="font-semibold">Oldest</label>
-                  <span className="text-[0.9rem] text-white/80">Chapter {_.minBy(comic.chapters, "chapter")?.chapter || "-"}</span>
-                </div>
-                <div className="flex w-full flex-col rounded bg-green-600 px-3 py-2 shadow">
-                  <label className="font-semibold">Newest</label>
-                  <span className="text-[0.9rem] text-white/80">Chapter {_.maxBy(comic.chapters, "chapter")?.chapter || "-"}</span>
-                </div>
               </section>
             </div>
           </section>
