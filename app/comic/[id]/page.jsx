@@ -4,12 +4,14 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import Backdrop from "@/components/comic-page/backdrop";
-import { FaAngleRight, FaBookOpen, FaHeart } from "react-icons/fa";
+import { FaBookOpen, FaHeart } from "react-icons/fa";
 import Link from "next/link";
 import Rating from "@/components/comic-page/rating";
 import parse from "html-react-parser";
 import { formatDateAgo } from "@/helpers/dateTime";
 import { SiAnilist } from "react-icons/si";
+import Settings from "./comp/settings";
+import EditModal from "./comp/editmodal";
 
 export default function ComicPage({ params }) {
   const { id } = params;
@@ -78,6 +80,7 @@ export default function ComicPage({ params }) {
               <button className="flex w-full items-center justify-center gap-2 rounded bg-[#ec294b] px-4 py-2 shadow md:w-[170px]">
                 <FaHeart /> Add to favorite
               </button>
+              <Settings />
             </section>
 
             <p className="rounded-[0.33rem] bg-white p-4 text-[0.94rem] text-black/70 shadow">{parse(comic.description)}</p>
@@ -102,7 +105,7 @@ export default function ComicPage({ params }) {
                         <a
                           target="_blank"
                           href={scrap.link_chapter}
-                          className="-mr-4 flex items-center gap-[0.3rem] rounded-bl rounded-tl bg-green-700 py-1 px-2 font-medium text-white/80"
+                          className="-mr-4 flex items-center gap-[0.3rem] rounded-bl rounded-tl bg-green-700 px-2 py-1 font-medium text-white/80"
                         >
                           <FaBookOpen />
                           {scrap.lang}
@@ -112,6 +115,7 @@ export default function ComicPage({ params }) {
               </div>
             </section>
           </section>
+          <EditModal initialTitle={comic.title} />
         </>
       )}
     </main>

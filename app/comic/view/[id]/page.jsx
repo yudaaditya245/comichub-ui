@@ -74,7 +74,7 @@ export default function ComicExPage({ params }) {
 
             <section className="container flex flex-col items-center gap-6">
               <div className="relative w-[30vw] shrink-0 overflow-hidden rounded-lg shadow md:max-w-[170px]">
-                <Image src={comic.cover_img} width={500} height={800} alt={comic.title} />
+                <Image src={comic.cover_img} width={500} height={800} alt={comic.title} priority />
               </div>
               <section className="flex flex-col items-center gap-1">
                 <h1 className="text-center text-lg font-semibold">{comic.title}</h1>
@@ -93,8 +93,8 @@ export default function ComicExPage({ params }) {
             </section>
           </header>
 
-          <section className="container flex flex-col gap-4 p-6 pt-0 lg:pl-0">
-            <section className="flex gap-3 text-[0.9rem] font-semibold text-white/90">
+          <section className="mx-auto w-full max-w-3xl flex flex-col items-center gap-4 p-5 pt-0 lg:pl-0">
+            <section className="flex w-full gap-3 text-[0.9rem] font-semibold text-white/90">
               {comic.main_id !== null && (
                 <Link
                   href={`/comic/${comic.main_id}`}
@@ -115,7 +115,7 @@ export default function ComicExPage({ params }) {
               </button>
             </section>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 w-full">
               <h3 className="mt-2 flex items-center gap-2 pl-1 font-semibold">
                 <FaList size={13} /> <span className="mt-[0.13rem]">Chapter fetched</span>
                 <button
@@ -131,19 +131,15 @@ export default function ComicExPage({ params }) {
                 {comic.chapters.length < 1
                   ? "No chapter fetched"
                   : comic.chapters.map(chapter => (
-                      <Link
-                        href={`/read/${comic.id}/${chapter.chapter}`}
-                        key={chapter.id}
-                        className="flex items-center justify-between rounded bg-white px-3 py-[0.35rem] shadow"
-                      >
-                        <section className="flex flex-col">
+                      <section key={chapter.id} className="flex items-center justify-between rounded bg-white px-3 py-[0.35rem] shadow">
+                        <Link href={`/read/${comic.id}/${chapter.chapter}`} className="flex flex-col">
                           <h4 className="text-[0.9rem] font-medium">Chapter {chapter.chapter}</h4>
                           <span className="text-[0.82rem] text-black/60">{formatDateAgo(chapter.updated_at)}</span>
-                        </section>
+                        </Link>
                         <a href={chapter.link} target="_blank">
                           <FiExternalLink size={16} className="text-blue-900" />
                         </a>
-                      </Link>
+                      </section>
                     ))}
               </section>
             </div>

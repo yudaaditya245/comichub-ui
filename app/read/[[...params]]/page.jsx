@@ -56,23 +56,14 @@ export default function Read({ params }) {
 
   return (
     <>
-      <Transition
-        as={Fragment}
-        show={isLoading}
-        enter="transition ease-out duration-75"
-        enterFrom="transform opacity-0 -translate-y-6"
-        enterTo="transform opacity-100 translate-y-00"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 translate-y-00"
-        leaveTo="transform opacity-0 -translate-y-6"
-      >
+      {isLoading && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-200">
           <section className="flex items-center gap-2 rounded bg-white px-6 py-5 shadow-md">
             Fetching
             <CgSpinnerTwo size={18} className="animate-spin" />
           </section>
         </div>
-      </Transition>
+      )}
 
       {!isLoading && (
         <div className="mx-auto max-w-3xl">
@@ -108,7 +99,7 @@ export default function Read({ params }) {
 
           <main className="relative mx-auto max-w-3xl">
             {comic.images.map((image, index) => (
-              <Image key={index} src={image} alt={index} width={500} height={3000} className="relative z-10 w-full" priority/>
+              <Image key={index} src={image} alt={index} width={500} height={3000} className="relative z-10 w-full" priority />
             ))}
             <div className="absolute left-0 top-0 z-0 h-full w-full animate-pulse bg-black/50"></div>
           </main>
@@ -137,7 +128,7 @@ export default function Read({ params }) {
                   </Link>
                 )}
                 <Link href={`/comic/view/${comic.id}`} className="flex items-center gap-3 rounded border border-white/20 px-3 py-2">
-                  <GoHomeFill size={18}/>
+                  <GoHomeFill size={18} />
                 </Link>
                 {_nextchap && (
                   <Link
