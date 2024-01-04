@@ -18,10 +18,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={twMerge(signika_Negative.className, "bg-light-300")}>
-        <NextTopLoader showSpinner={false}/>
+        <NextTopLoader showSpinner={false} color="#21cc61" />
         <Provider>
           <div className="flex min-h-screen flex-col">
-            <div className="flex-grow pb-10">{children}</div>
+            <div className="flex-grow pb-24">{children}</div>
             <Nav />
             <Toaster />
           </div>

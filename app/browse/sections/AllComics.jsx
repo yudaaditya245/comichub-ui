@@ -2,13 +2,13 @@
 
 import CardComics from "@/components/CardComics";
 import { LatestComicsSkeleton } from "@/components/Skeletons";
+import useRefetchDelay from "@/hooks/useRefetchDelay";
 import { scrollRestoreByCache } from "@/hooks/useScrollRestoration";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export default function AllComics() {
-
   const { isPending, data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ["getComicsInfinity"],
     queryFn: async ({ pageParam }) => {
@@ -25,6 +25,10 @@ export default function AllComics() {
 
   // initialize scroll restoration
   scrollRestoreByCache("browseScrollY", data);
+
+  // UI: when data loading less than 200ms, skeleton transition break
+  // so here, give delay for transition to finish
+  const { skeleton, refetchDelay: fetchNextPageDelay } = useRefetchDelay(100, fetchNextPage, isFetchingNextPage);
 
   return (
     <section className="container flex flex-col gap-6">
@@ -43,7 +47,7 @@ export default function AllComics() {
               </Fragment>
             ))}
           </ul>
-          {<LatestComicsSkeleton show={isFetchingNextPage} />}
+          {<LatestComicsSkeleton show={skeleton} />}
         </>
       )}
 
@@ -53,7 +57,7 @@ export default function AllComics() {
         </div>
       ) : (
         <button
-          onClick={() => fetchNextPage()}
+          onClick={() => fetchNextPageDelay()}
           className="mt-3 flex items-center justify-center gap-2 rounded bg-white p-3 drop-shadow-darksoft"
         >
           <span className="text-[0.94rem] font-semibold">Browse more ...</span>

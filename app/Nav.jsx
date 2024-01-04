@@ -57,10 +57,13 @@ export default function Nav({ className }) {
     }
   ];
 
+  const excludePaths = ["/read"];
+  const isExcludedPath = excludePaths.some(excludedPath => pathname.startsWith(excludedPath));
+
   return (
     <Transition
       as={Fragment}
-      show={isVisible}
+      show={isVisible && !isExcludedPath}
       enter="transition ease-out duration-75"
       enterFrom="transform opacity-0 translate-y-6 scale-90"
       enterTo="transform opacity-100 translate-y-0 scale-100"
@@ -75,7 +78,7 @@ export default function Nav({ className }) {
         )}
       >
         <div className="flex max-w-2xl justify-end max-md:mx-auto max-md:w-full md:mr-auto">
-          <ScrollTop className="rounded-lg bg-white p-[0.6rem] md:p-3 shadow md:shadow-md" />
+          <ScrollTop className="rounded-lg bg-white p-[0.6rem] shadow md:p-3 md:shadow-md" />
         </div>
 
         <ul
@@ -83,7 +86,7 @@ export default function Nav({ className }) {
         font-bold shadow-[0_0_10px_rgba(0,0,0,0.3)] md:mr-0"
         >
           {navObj.map(nav => (
-            <Link key={nav.path} href={nav.path} className="relative text-white/90 w-full">
+            <Link key={nav.path} href={nav.path} className="relative w-full text-white/90">
               <span className="flex justify-center">
                 <nav.icon size={nav.size} />
                 {nav.path === pathname && <div className="absolute -bottom-[0.5rem] h-[3px] w-3 rounded-full bg-white/60"></div>}

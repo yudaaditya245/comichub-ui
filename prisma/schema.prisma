@@ -12,7 +12,7 @@ model Comics {
   title       String   @db.VarChar(255)
   cover_img   String   @db.VarChar(255)
   synonyms    String?  @db.Text
-  description String?   @db.Text
+  description String?  @db.Text
   genres      String   @db.VarChar(255)
   score       Int?     @default(0)
   type        String   @db.VarChar(255)
@@ -42,7 +42,7 @@ model ScrapChapters {
   scrap_id   Int
   link       String
   chapter    Int
-  images     String?
+  images     String?  @db.Text
   updated_at DateTime @db.Timestamp()
   scrap      Scraps   @relation(fields: [scrap_id], references: [id])
 }
