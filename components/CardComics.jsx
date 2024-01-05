@@ -1,5 +1,4 @@
 import { formatDateAgo } from "@/helpers/dateTime";
-import Image from "next/image";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa";
 import { BsFire } from "react-icons/bs";
@@ -23,7 +22,7 @@ export default function CardComics({ comic, sourceLabel = false, excLabel = fals
         )}
 
         <Link href={cardUrl}>
-          <Image src={comic.cover_img} width={500} height={300} alt={comic.title} className="h-full w-full object-cover object-center" />
+          <img src={comic.cover_img} alt={comic.title} className="h-full w-full object-cover object-center" />
         </Link>
 
         <Link

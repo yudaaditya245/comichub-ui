@@ -7,19 +7,16 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 import { TiWorld } from "react-icons/ti";
 import { CgSpinner, CgSpinnerTwo } from "react-icons/cg";
 import _ from "lodash";
-import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
+import { FaAngleDoubleUp, FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { GoHomeFill } from "react-icons/go";
 
 export default function Read({ params }) {
   const [id, chapter] = params.params;
-  const nextChap = parseInt(chapter) + 1;
-
-  const { isShown: showTool } = useScrollTapView();
 
   const { isLoading, data: comic } = useQuery({
     queryKey: ["read", id, chapter],
@@ -53,6 +50,8 @@ export default function Read({ params }) {
     _nextchap = _.findLast(allChapters, c => c.chapter > chapter);
     // console.log("nextchap", _nextchap);
   }
+
+  const { isShown: showTool } = useScrollTapView();
 
   return (
     <>
@@ -96,9 +95,9 @@ export default function Read({ params }) {
             </section>
           </Transition>
 
-          <main className="relative mx-auto max-w-3xl">
+          <main className="relative mx-auto max-w-3xl bg-black pt-24">
             {comic.images.map((image, index) => (
-              <img key={index} src={image} alt={index} className="relative z-10 w-full" />
+              <img key={index} src={image} alt={index} className="relative z-10 w-full" fetchPriority={index <= 2 ? "high" : "auto"} />
             ))}
             <div className="absolute left-0 top-0 z-0 h-full w-full animate-pulse bg-black/50"></div>
           </main>
@@ -114,34 +113,39 @@ export default function Read({ params }) {
             leaveTo="transform opacity-0 translate-y-6"
           >
             <section className="fixed bottom-0 left-0 z-[999] flex w-full justify-center">
-              <div
-                className="flex w-full max-w-3xl justify-center gap-3 bg-black/80 p-5 text-[0.9rem] text-white/80
-                            shadow-md backdrop-blur-md"
-              >
-                {_prevchap && (
-                  <Link
-                    href={`/read/${comic.id}/${_prevchap.chapter}`}
-                    className="flex items-center gap-3 rounded border border-white/20 px-5 py-2"
-                  >
-                    <FaLongArrowAltLeft /> Previous
+              <div className="flex w-full max-w-3xl bg-black/80 backdrop-blur-md">
+                <div className="flex grow justify-center gap-3 p-4 text-[0.9rem] text-white/80">
+                  {_prevchap && (
+                    <Link
+                      href={`/read/${comic.id}/${_prevchap.chapter}`}
+                      className="flex items-center gap-3 rounded border border-white/20 px-5 py-2"
+                    >
+                      <FaLongArrowAltLeft /> Previous
+                    </Link>
+                  )}
+                  <Link href={`/comic/view/${comic.id}`} className="flex items-center gap-3 rounded border border-white/20 px-3 py-2">
+                    <GoHomeFill size={18} />
                   </Link>
-                )}
-                <Link href={`/comic/view/${comic.id}`} className="flex items-center gap-3 rounded border border-white/20 px-3 py-2">
-                  <GoHomeFill size={18} />
-                </Link>
-                {_nextchap && (
-                  <Link
-                    href={`/read/${comic.id}/${_nextchap.chapter}`}
-                    className="flex items-center gap-3 rounded border border-white/20 px-5 py-2"
-                  >
-                    Next <FaLongArrowAltRight />
-                  </Link>
-                )}
+                  {_nextchap && (
+                    <Link
+                      href={`/read/${comic.id}/${_nextchap.chapter}`}
+                      className="flex items-center gap-3 rounded border border-white/20 px-5 py-2"
+                    >
+                      Next <FaLongArrowAltRight />
+                    </Link>
+                  )}
+                </div>
+
+                <div className="">
+                  <ScrollTop
+                    className="flex h-full items-center gap-1 border-l border-white/10 pl-4 pr-5 text-white/80"
+                    icon={FaAngleDoubleUp}
+                    iconSize={16}
+                  ></ScrollTop>
+                </div>
               </div>
             </section>
           </Transition>
-
-          <ScrollTop className="fixed bottom-5 right-5 z-[998] rounded bg-green-600 p-3 text-white shadow" />
         </div>
       )}
     </>

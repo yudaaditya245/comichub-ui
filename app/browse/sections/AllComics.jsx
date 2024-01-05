@@ -6,7 +6,8 @@ import useRefetchDelay from "@/hooks/useRefetchDelay";
 import { scrollRestoreByCache } from "@/hooks/useScrollRestoration";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
+import { FaAngleDown } from "react-icons/fa";
 
 export default function AllComics() {
   const { isPending, data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
@@ -30,6 +31,7 @@ export default function AllComics() {
   // so here, give delay for transition to finish
   const { skeleton, refetchDelay: fetchNextPageDelay } = useRefetchDelay(100, fetchNextPage, isFetchingNextPage);
 
+  // console.log(inView);
   return (
     <section className="container flex flex-col gap-6">
       <LatestComicsSkeleton show={isPending} />
@@ -60,7 +62,9 @@ export default function AllComics() {
           onClick={() => fetchNextPageDelay()}
           className="mt-3 flex items-center justify-center gap-2 rounded bg-white p-3 drop-shadow-darksoft"
         >
-          <span className="text-[0.94rem] font-semibold">Browse more ...</span>
+          <span className="flex items-center gap-2 text-[0.94rem] font-semibold">
+            Browse more <FaAngleDown />
+          </span>
         </button>
       )}
     </section>
