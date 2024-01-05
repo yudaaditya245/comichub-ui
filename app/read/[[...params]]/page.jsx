@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 import { TiWorld } from "react-icons/ti";
-import { CgSpinnerTwo } from "react-icons/cg";
+import { CgSpinner, CgSpinnerTwo } from "react-icons/cg";
 import _ from "lodash";
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { GoHomeFill } from "react-icons/go";
@@ -56,16 +56,14 @@ export default function Read({ params }) {
 
   return (
     <>
-      {isLoading && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-slate-200">
-          <section className="flex items-center gap-2 rounded bg-white px-6 py-5 shadow-md">
-            Fetching
-            <CgSpinnerTwo size={18} className="animate-spin" />
+      {isLoading ? (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-dark-700">
+          <section className="bordery flex flex-col items-center gap-8 rounded-lg bg-white/[0.07] px-10 py-10 text-white/75">
+            Fetching website
+            <CgSpinner size={38} className="animate-spin" />
           </section>
         </div>
-      )}
-
-      {!isLoading && (
+      ) : (
         <div className="mx-auto max-w-3xl">
           <Transition
             as={Fragment}
@@ -78,20 +76,21 @@ export default function Read({ params }) {
             leaveTo="transform opacity-0 -translate-y-6"
           >
             <section className="fixed left-0 top-0 z-[999] flex w-full justify-center">
-              <div className="flex w-full max-w-3xl justify-between bg-black/80 p-5 shadow-md backdrop-blur-md">
-                <div>
+              <div className="flex w-full max-w-3xl justify-between gap-6 bg-black/80 p-5 shadow-md backdrop-blur-md">
+                <div className="flex flex-col gap-2">
                   <Link href={`/comic/view/${comic.id}`}>
-                    <h1 className="flex items-center gap-2 text-[1.1rem] font-semibold text-white/80">
-                      {comic.title}
-                      <FiArrowUpRight size={18} className="text-blue-300" />
+                    <h1 className="flex items-center gap-1 text-[1.1rem] font-semibold text-white/80">
+                      <span className="line-clamp-1">{comic.title}</span>
+                      <FiArrowUpRight size={18} className="text-green-400" />
                     </h1>
                   </Link>
-                  <h3 className="text-[0.9rem] font-medium text-white/60">
-                    Chapter {comic.chapter} &nbsp;&middot;&nbsp; {comic.source}
+                  <h3 className="flex gap-2 text-sm font-medium text-white/60">
+                    <span>Chapter {comic.chapter}</span> &middot;
+                    <span className="text-green-500">{comic.source}</span>
                   </h3>
                 </div>
                 <Link href={comic.link} target="_blank" className="flex h-full items-center">
-                  <TiWorld className="text-white/80" size={20} />
+                  <TiWorld className="text-white/80" size={24} />
                 </Link>
               </div>
             </section>
@@ -99,7 +98,7 @@ export default function Read({ params }) {
 
           <main className="relative mx-auto max-w-3xl">
             {comic.images.map((image, index) => (
-              <Image key={index} src={image} alt={index} width={500} height={3000} className="relative z-10 w-full" priority />
+              <img key={index} src={image} alt={index} className="relative z-10 w-full" />
             ))}
             <div className="absolute left-0 top-0 z-0 h-full w-full animate-pulse bg-black/50"></div>
           </main>
@@ -142,7 +141,7 @@ export default function Read({ params }) {
             </section>
           </Transition>
 
-          <ScrollTop className="fixed bottom-5 right-5 z-[998] rounded bg-white p-3 shadow-md" />
+          <ScrollTop className="fixed bottom-5 right-5 z-[998] rounded bg-green-600 p-3 text-white shadow" />
         </div>
       )}
     </>

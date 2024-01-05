@@ -17,7 +17,11 @@ body {
   @apply text-black/80
 }
 
-@layer {
+@layer base {
+
+  .bordery {
+    @apply border border-white/[0.07]
+  }
 
   .container {
     @apply max-w-5xl mx-auto

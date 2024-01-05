@@ -12,6 +12,7 @@ import { formatDateAgo } from "@/helpers/dateTime";
 import { SiAnilist } from "react-icons/si";
 import Settings from "./comp/settings";
 import EditModal from "./comp/editmodal";
+import { redirect } from "next/navigation";
 
 export default function ComicPage({ params }) {
   const { id } = params;

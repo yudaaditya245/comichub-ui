@@ -1,4 +1,5 @@
 import { MdKeyboardDoubleArrowUp } from "react-icons/md";
+import { IoMdRocket } from "react-icons/io";
 import { twMerge } from "tailwind-merge";
 
 export default function ScrollTop({ className }) {
@@ -11,7 +12,7 @@ export default function ScrollTop({ className }) {
 
   return (
     <button onClick={scrollToTop} className={twMerge("", className)}>
-      <MdKeyboardDoubleArrowUp size={18} />
+      <IoMdRocket size={18} />
     </button>
   );
 }
