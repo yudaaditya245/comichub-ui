@@ -103,14 +103,14 @@ export default function Read({ params }) {
                 key={index}
                 alt={index}
                 src={image}
-                className="z-10 w-full"
+                className="relative z-10 w-full"
                 height={1200}
                 width={500}
                 threshold={1200}
                 useIntersectionObserver={true}
               />
             ))}
-            {/* <div className="absolute left-0 top-0 z-0 h-full w-full animate-pulse bg-green-900"></div> */}
+            <div className="absolute left-0 top-0 z-0 h-full w-full animate-pulse bg-green-900"></div>
           </main>
 
           <Transition
