@@ -96,21 +96,21 @@ export default function Read({ params }) {
             </section>
           </Transition>
 
-          <main className="relative mx-auto max-w-3xl bg-black pt-24">
+          <main className="relative mx-auto max-w-3xl overflow-hidden bg-black pt-24">
             {comic.images.map((image, index) => (
-              // <img src={image} alt={index} className="relative z-10 w-full" height="1000" width="800" loading="lazy" />
+              // <img src={image} alt={index} className="relative z-10 w-full" height="1000" width="300" loading="lazy" />
               <LazyLoadImage
                 key={index}
                 alt={index}
                 src={image}
                 className="relative z-10 w-full"
                 height={1200}
-                width={500}
-                threshold={1200}
+                width={300}
+                threshold={500}
                 useIntersectionObserver={true}
               />
             ))}
-            <div className="absolute left-0 top-0 z-0 h-full w-full animate-pulse bg-green-900"></div>
+            <div className="absolute left-0 top-24 z-0 h-full w-full animate-pulse bg-green-900"></div>
           </main>
 
           <Transition
@@ -124,8 +124,8 @@ export default function Read({ params }) {
             leaveTo="transform opacity-0 translate-y-6"
           >
             <section className="fixed bottom-0 left-0 z-[999] flex w-full justify-center">
-              <div className="flex w-full max-w-3xl bg-black/80 backdrop-blur-md">
-                <div className="flex grow justify-center gap-3 p-4 text-[0.9rem] text-white/80">
+              <div className="flex w-full max-w-3xl bg-black/80 px-5 py-4 backdrop-blur-md">
+                <div className="flex grow justify-center gap-3 text-[0.9rem] text-white/80">
                   {_prevchap && (
                     <Link
                       href={`/read/${comic.id}/${_prevchap.chapter}`}
@@ -147,13 +147,11 @@ export default function Read({ params }) {
                   )}
                 </div>
 
-                <div className="">
-                  <ScrollTop
-                    className="flex h-full items-center gap-1 border-l border-white/10 pl-4 pr-5 text-white/80"
-                    icon={FaAngleDoubleUp}
-                    iconSize={16}
-                  ></ScrollTop>
-                </div>
+                <ScrollTop
+                  className="flex items-center gap-1 border-l border-white/[0.15] pl-4 text-white/80"
+                  icon={FaAngleDoubleUp}
+                  iconSize={16}
+                ></ScrollTop>
               </div>
             </section>
           </Transition>
