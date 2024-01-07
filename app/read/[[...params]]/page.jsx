@@ -14,6 +14,7 @@ import { CgSpinner, CgSpinnerTwo } from "react-icons/cg";
 import _ from "lodash";
 import { FaAngleDoubleUp, FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { GoHomeFill } from "react-icons/go";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function Read({ params }) {
   const [id, chapter] = params.params;
@@ -97,9 +98,19 @@ export default function Read({ params }) {
 
           <main className="relative mx-auto max-w-3xl bg-black pt-24">
             {comic.images.map((image, index) => (
-              <img key={index} src={image} alt={index} className="relative z-10 w-full" fetchPriority={index <= 2 ? "high" : "auto"} />
+              // <img src={image} alt={index} className="relative z-10 w-full" height="1000" width="800" loading="lazy" />
+              <LazyLoadImage
+                key={index}
+                alt={index}
+                src={image}
+                className="z-10 w-full"
+                height={1200}
+                width={500}
+                threshold={1200}
+                useIntersectionObserver={true}
+              />
             ))}
-            <div className="absolute left-0 top-0 z-0 h-full w-full animate-pulse bg-black/50"></div>
+            {/* <div className="absolute left-0 top-0 z-0 h-full w-full animate-pulse bg-green-900"></div> */}
           </main>
 
           <Transition
