@@ -7,6 +7,7 @@ import { Fragment, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { MdFolderSpecial } from "react-icons/md";
 import PopoverEx from "../comp/PopoverSm";
+import { base_url } from "@/helpers/pubicEnv";
 
 export default function GroupsComics({ source }) {
   const [exc, setExc] = useState(true);
@@ -14,7 +15,7 @@ export default function GroupsComics({ source }) {
   const { isPending, data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ["getGroupsInfinity", exc, source],
     queryFn: async ({ pageParam = 1 }) => {
-      const { data } = await axios.get(`/api/get-comics-ex?source=${source}&page=${pageParam}&ex=${exc}`);
+      const { data } = await axios.get(`${base_url}/comic/getallex?source=${source}&page=${pageParam}&ex=${exc}`);
       if (data) return data;
       throw Error("No data");
     },

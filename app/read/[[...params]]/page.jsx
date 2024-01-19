@@ -15,6 +15,7 @@ import _ from "lodash";
 import { FaAngleDoubleUp, FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 import { GoHomeFill } from "react-icons/go";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { redirect } from "next/navigation";
 
 export default function Read({ params }) {
   const [id, chapter] = params.params;
@@ -30,6 +31,12 @@ export default function Read({ params }) {
       throw Error("No data");
     }
   });
+
+  useEffect(() => {
+    if (comic && comic.source === "shinigami") {
+      redirect(comic.link);
+    }
+  }, [comic]);
 
   const { isLoading: allChapLoading, data: allChap } = useQuery({
     queryKey: ["read", id],

@@ -2,6 +2,7 @@
 
 import CardComics from "@/components/CardComics";
 import { LatestComicsSkeleton } from "@/components/Skeletons";
+import { base_url } from "@/helpers/pubicEnv";
 import useRefetchDelay from "@/hooks/useRefetchDelay";
 import { scrollRestoreByCache } from "@/hooks/useScrollRestoration";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -13,7 +14,7 @@ export default function AllComics() {
   const { isPending, data, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ["getComicsInfinity"],
     queryFn: async ({ pageParam }) => {
-      const { data } = await axios.get(`/api/get-comics?page=${pageParam}&ex=yes`);
+      const { data } = await axios.get(`${base_url}/comic/getall?page=${pageParam}&ex=yes`);
       if (data) return data;
       throw Error("No data");
     },
@@ -33,6 +34,7 @@ export default function AllComics() {
 
   // console.log(inView);
   return (
+    
     <section className="container flex flex-col gap-6">
       <LatestComicsSkeleton show={isPending} />
 
